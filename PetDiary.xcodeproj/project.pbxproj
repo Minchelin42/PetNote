@@ -14,6 +14,17 @@
 		396D2FC62B99839700613BFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 396D2FC52B99839700613BFE /* Assets.xcassets */; };
 		396D2FC92B99839700613BFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 396D2FC72B99839700613BFE /* LaunchScreen.storyboard */; };
 		396D2FD12B9985E500613BFE /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 396D2FD02B9985E500613BFE /* .gitignore */; };
+		396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FD32B998AA100613BFE /* ProfileViewController.swift */; };
+		396D2FDC2B9ADEA900613BFE /* CameraButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FDB2B9ADEA900613BFE /* CameraButton.swift */; };
+		396D2FDF2B9ADF7200613BFE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FDE2B9ADF7200613BFE /* SnapKit */; };
+		396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FE02B9AE23A00613BFE /* ProfileButton.swift */; };
+		396D2FE32B9AE5C100613BFE /* ProfileInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FE22B9AE5C100613BFE /* ProfileInputTextField.swift */; };
+		396D2FE62B9AE78000613BFE /* TextFieldEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FE52B9AE78000613BFE /* TextFieldEffects */; };
+		396D2FE92B9B5AE000613BFE /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FE82B9B5AE000613BFE /* Color.swift */; };
+		396D2FEB2B9B5C5400613BFE /* ProfileLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FEA2B9B5C5400613BFE /* ProfileLabel.swift */; };
+		396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FEC2B9B5DE800613BFE /* ProfileInputButton.swift */; };
+		396D2FEF2B9B65AC00613BFE /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FEE2B9B65AC00613BFE /* BaseView.swift */; };
+		396D2FF12B9B65FB00613BFE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FF02B9B65FB00613BFE /* ProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +37,15 @@
 		396D2FC82B99839700613BFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		396D2FCA2B99839700613BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		396D2FD02B9985E500613BFE /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		396D2FD32B998AA100613BFE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		396D2FDB2B9ADEA900613BFE /* CameraButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraButton.swift; sourceTree = "<group>"; };
+		396D2FE02B9AE23A00613BFE /* ProfileButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileButton.swift; sourceTree = "<group>"; };
+		396D2FE22B9AE5C100613BFE /* ProfileInputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInputTextField.swift; sourceTree = "<group>"; };
+		396D2FE82B9B5AE000613BFE /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		396D2FEA2B9B5C5400613BFE /* ProfileLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLabel.swift; sourceTree = "<group>"; };
+		396D2FEC2B9B5DE800613BFE /* ProfileInputButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInputButton.swift; sourceTree = "<group>"; };
+		396D2FEE2B9B65AC00613BFE /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		396D2FF02B9B65FB00613BFE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				396D2FDF2B9ADF7200613BFE /* SnapKit in Frameworks */,
+				396D2FE62B9AE78000613BFE /* TextFieldEffects in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +81,10 @@
 		396D2FBB2B99839200613BFE /* PetDiary */ = {
 			isa = PBXGroup;
 			children = (
+				396D2FE72B9B5AD100613BFE /* Style */,
+				396D2FDA2B9ADE8D00613BFE /* Custom */,
+				396D2FD52B99915D00613BFE /* Base */,
+				396D2FD22B998A8F00613BFE /* Profile */,
 				396D2FBC2B99839200613BFE /* AppDelegate.swift */,
 				396D2FBE2B99839200613BFE /* SceneDelegate.swift */,
 				396D2FC02B99839200613BFE /* ViewController.swift */,
@@ -68,6 +94,43 @@
 				396D2FCA2B99839700613BFE /* Info.plist */,
 			);
 			path = PetDiary;
+			sourceTree = "<group>";
+		};
+		396D2FD22B998A8F00613BFE /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				396D2FD32B998AA100613BFE /* ProfileViewController.swift */,
+				396D2FF02B9B65FB00613BFE /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		396D2FD52B99915D00613BFE /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				396D2FEE2B9B65AC00613BFE /* BaseView.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		396D2FDA2B9ADE8D00613BFE /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				396D2FDB2B9ADEA900613BFE /* CameraButton.swift */,
+				396D2FE02B9AE23A00613BFE /* ProfileButton.swift */,
+				396D2FEA2B9B5C5400613BFE /* ProfileLabel.swift */,
+				396D2FE22B9AE5C100613BFE /* ProfileInputTextField.swift */,
+				396D2FEC2B9B5DE800613BFE /* ProfileInputButton.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		396D2FE72B9B5AD100613BFE /* Style */ = {
+			isa = PBXGroup;
+			children = (
+				396D2FE82B9B5AE000613BFE /* Color.swift */,
+			);
+			path = Style;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,6 +149,10 @@
 			dependencies = (
 			);
 			name = PetDiary;
+			packageProductDependencies = (
+				396D2FDE2B9ADF7200613BFE /* SnapKit */,
+				396D2FE52B9AE78000613BFE /* TextFieldEffects */,
+			);
 			productName = PetDiary;
 			productReference = 396D2FB92B99839200613BFE /* PetDiary.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +181,10 @@
 				Base,
 			);
 			mainGroup = 396D2FB02B99839200613BFE;
+			packageReferences = (
+				396D2FDD2B9ADF7200613BFE /* XCRemoteSwiftPackageReference "SnapKit" */,
+				396D2FE42B9AE78000613BFE /* XCRemoteSwiftPackageReference "TextFieldEffects" */,
+			);
 			productRefGroup = 396D2FBA2B99839200613BFE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -142,8 +213,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				396D2FE32B9AE5C100613BFE /* ProfileInputTextField.swift in Sources */,
+				396D2FF12B9B65FB00613BFE /* ProfileView.swift in Sources */,
+				396D2FEB2B9B5C5400613BFE /* ProfileLabel.swift in Sources */,
+				396D2FEF2B9B65AC00613BFE /* BaseView.swift in Sources */,
 				396D2FC12B99839200613BFE /* ViewController.swift in Sources */,
 				396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */,
+				396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */,
+				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
+				396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */,
+				396D2FDC2B9ADEA900613BFE /* CameraButton.swift in Sources */,
+				396D2FE92B9B5AE000613BFE /* Color.swift in Sources */,
 				396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,6 +447,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		396D2FDD2B9ADF7200613BFE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		396D2FE42B9AE78000613BFE /* XCRemoteSwiftPackageReference "TextFieldEffects" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raulriera/TextFieldEffects.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		396D2FDE2B9ADF7200613BFE /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 396D2FDD2B9ADF7200613BFE /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		396D2FE52B9AE78000613BFE /* TextFieldEffects */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 396D2FE42B9AE78000613BFE /* XCRemoteSwiftPackageReference "TextFieldEffects" */;
+			productName = TextFieldEffects;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 396D2FB12B99839200613BFE /* Project object */;
 }
