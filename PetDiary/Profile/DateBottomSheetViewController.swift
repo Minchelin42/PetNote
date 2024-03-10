@@ -10,7 +10,10 @@ import SnapKit
 
 class DateBottomSheetViewController: UIViewController {
     
-    var defaultHeight: CGFloat = 300
+    let viewModel = ProfileViewModel()
+    let defaultHeight: CGFloat = 300
+    
+    var dateType: DateType = .birth
     
     private let dimmedView: UIView = {
         let view = UIView()
@@ -30,7 +33,9 @@ class DateBottomSheetViewController: UIViewController {
     let clearButton = CompleteButton()
     
     let datePicker = UIDatePicker()
-
+    
+    var selectDate: ((Date?) -> Void)?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,22 +48,32 @@ class DateBottomSheetViewController: UIViewController {
         dimmedView.isUserInteractionEnabled = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.dateType == .birth {
+            selectDate?(viewModel.birth.value)
+        } else {
+            selectDate?(viewModel.firstMeet.value)
+        }
+    }
+    
     @objc func dimmedViewTapped() {
         bottomSheetDisappear()
     }
     
-    func bottomSheetDisappear() {
+    private func bottomSheetDisappear() {
         self.dimmedView.alpha = 0.0
         self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-    
+        
         showBottomSheet()
     }
     
-    func configureHierarchy() {
+    private func configureHierarchy() {
         view.addSubview(dimmedView)
         view.addSubview(bottomSheetView)
         
@@ -68,7 +83,7 @@ class DateBottomSheetViewController: UIViewController {
         dimmedView.alpha = 0.0
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         dimmedView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -92,7 +107,7 @@ class DateBottomSheetViewController: UIViewController {
         }
     }
     
-    func configureView() {
+    private func configureView() {
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.datePickerMode = .date
         datePicker.locale = Locale(identifier: "ko_KR")
@@ -102,10 +117,16 @@ class DateBottomSheetViewController: UIViewController {
     
     @objc func clearButtonClicked() {
         print(datePicker.date)
+        if self.dateType == .birth {
+            viewModel.birth.value = datePicker.date
+        } else {
+            viewModel.firstMeet.value = datePicker.date
+            print(viewModel.firstMeet.value)
+        }
         bottomSheetDisappear()
     }
     
-    func showBottomSheet() {
+    private func showBottomSheet() {
         let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
         let bottomPadding: CGFloat = view.safeAreaInsets.bottom
         

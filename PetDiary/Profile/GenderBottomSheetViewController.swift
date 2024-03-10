@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 
 class GenderBottomSheetViewController: UIViewController {
 
-    var defaultHeight: CGFloat = 200
+    let viewModel = ProfileViewModel()
+    let defaultHeight: CGFloat = 200
     
     private let dimmedView: UIView = {
         let view = UIView()
@@ -31,10 +33,11 @@ class GenderBottomSheetViewController: UIViewController {
     
     let clearButton = CompleteButton()
 
+    var selectGender: ((Bool?) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("genderbottomViewDidLoad: \(viewModel.gender.value)")
         configureHierarchy()
         configureLayout()
         configureView()
@@ -44,6 +47,14 @@ class GenderBottomSheetViewController: UIViewController {
         dimmedView.isUserInteractionEnabled = true
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        selectGender?(viewModel.gender.value)
+        print("genderbottom: \(viewModel.gender.value)")
+
+    }
+    
     @objc func dimmedViewTapped() {
         bottomSheetDisappear()
     }
@@ -51,20 +62,21 @@ class GenderBottomSheetViewController: UIViewController {
     @objc func genderSelected(_ sender: UIButton) {
         sender.isSelected.toggle()
         if sender.titleLabel?.text == "남아" {
+            self.viewModel.gender.value = true //true == 남
             if girlButton.isSelected {
                 girlButton.isSelected.toggle()
             }
         } else {
+            self.viewModel.gender.value = false
             if boyButton.isSelected {
                 boyButton.isSelected.toggle()
             }
         }
         changeButtonStyle(boyButton)
         changeButtonStyle(girlButton)
-        
     }
     
-    func changeButtonStyle(_ button: UIButton) {
+    private func changeButtonStyle(_ button: UIButton) {
         if button.isSelected {
             button.setTitleColor(Color.font, for: .normal)
             button.layer.borderWidth = 1
@@ -75,7 +87,7 @@ class GenderBottomSheetViewController: UIViewController {
         }
     }
     
-    func bottomSheetDisappear() {
+    private func bottomSheetDisappear() {
         self.dimmedView.alpha = 0.0
         self.dismiss(animated: true, completion: nil)
     }
@@ -86,7 +98,7 @@ class GenderBottomSheetViewController: UIViewController {
         showBottomSheet()
     }
     
-    func configureHierarchy() {
+    private func configureHierarchy() {
         view.addSubview(dimmedView)
         view.addSubview(bottomSheetView)
         
@@ -97,7 +109,7 @@ class GenderBottomSheetViewController: UIViewController {
         dimmedView.alpha = 0.0
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         dimmedView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -127,10 +139,21 @@ class GenderBottomSheetViewController: UIViewController {
         }
     }
     
-    func configureView() {
+    private func configureView() {
         
         boyButton.setTitle("남아", for: .normal)
         girlButton.setTitle("여아", for: .normal)
+        
+        if let gender = viewModel.gender.value  {
+            if gender {
+                boyButton.isSelected = true
+            } else {
+                girlButton.isSelected = true
+            }
+            changeButtonStyle(boyButton)
+            changeButtonStyle(girlButton)
+        }
+        
         boyButton.addTarget(self, action: #selector(genderSelected), for: .touchUpInside)
         girlButton.addTarget(self, action: #selector(genderSelected), for: .touchUpInside)
         clearButton.addTarget(self, action: #selector(clearButtonClicked), for: .touchUpInside)
@@ -140,7 +163,7 @@ class GenderBottomSheetViewController: UIViewController {
         bottomSheetDisappear()
     }
     
-    func showBottomSheet() {
+    private func showBottomSheet() {
         let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
         let bottomPadding: CGFloat = view.safeAreaInsets.bottom
         

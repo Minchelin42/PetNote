@@ -28,6 +28,8 @@ final class ProfileView: BaseView {
     let weightLabel = ProfileLabel()
     let weightTextField = ProfileInputTextField()
     
+    let inputHeight = 50
+    
     let registerButton = {
         let button = UIButton()
         button.clipsToBounds = true
@@ -66,7 +68,7 @@ final class ProfileView: BaseView {
         
         cameraButton.snp.makeConstraints { make in
             make.top.equalTo(profileButton.snp.top).inset(100)
-            make.centerX.equalTo(profileButton.snp.trailing).inset(20)
+            make.centerX.equalTo(profileButton.snp.trailing).inset(12)
             make.size.equalTo(50)
         }
         
@@ -78,7 +80,7 @@ final class ProfileView: BaseView {
         nameTextField.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
-            make.height.equalTo(45)
+            make.height.equalTo(inputHeight)
         }
         
         genderLabel.snp.makeConstraints { make in
@@ -89,7 +91,7 @@ final class ProfileView: BaseView {
         genderButton.snp.makeConstraints { make in
             make.top.equalTo(genderLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
-            make.height.equalTo(45)
+            make.height.equalTo(inputHeight)
         }
         
         birthLabel.snp.makeConstraints { make in
@@ -100,7 +102,7 @@ final class ProfileView: BaseView {
         birthButton.snp.makeConstraints { make in
             make.top.equalTo(birthLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
-            make.height.equalTo(45)
+            make.height.equalTo(inputHeight)
         }
         
         meetLabel.snp.makeConstraints { make in
@@ -111,7 +113,7 @@ final class ProfileView: BaseView {
         meetButton.snp.makeConstraints { make in
             make.top.equalTo(meetLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
-            make.height.equalTo(45)
+            make.height.equalTo(inputHeight)
         }
         
         weightLabel.snp.makeConstraints { make in
@@ -122,13 +124,13 @@ final class ProfileView: BaseView {
         weightTextField.snp.makeConstraints { make in
             make.top.equalTo(weightLabel.snp.bottom).offset(4)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
-            make.height.equalTo(45)
+            make.height.equalTo(inputHeight)
         }
         
         registerButton.snp.makeConstraints { make in
             make.top.equalTo(weightTextField.snp.bottom).offset(45)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
-            make.height.equalTo(45)
+            make.height.equalTo(inputHeight)
         }
         
     }
@@ -143,12 +145,18 @@ final class ProfileView: BaseView {
 
         genderLabel.text = "성별"
         genderButton.setTitle("성별을 입력해주세요", for: .normal)
+        
         birthLabel.text = "태어난 날"
         birthButton.setTitle("생일을 입력해주세요", for: .normal)
+        birthButton.datetype = .birth
+        
         meetLabel.text = "처음 만난 날"
         meetButton.setTitle("처음 만난 날을 입력해주세요", for: .normal)
+        meetButton.datetype = .firstMeet
+        
         weightLabel.text = "몸무게"
         weightTextField.placeholder = "몸무게(kg)를 입력해주세요"
+        weightTextField.keyboardType = .decimalPad
     }
 
 

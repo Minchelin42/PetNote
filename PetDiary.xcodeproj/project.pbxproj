@@ -14,6 +14,12 @@
 		394054EB2B9C2812000AF69F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 394054EA2B9C2812000AF69F /* Realm */; };
 		394054ED2B9C2812000AF69F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 394054EC2B9C2812000AF69F /* RealmSwift */; };
 		394054EF2B9C311C000AF69F /* Extension + TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054EE2B9C311C000AF69F /* Extension + TextField.swift */; };
+		394054F22B9D74A2000AF69F /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 394054F12B9D74A2000AF69F /* IQKeyboardManagerSwift */; };
+		394054F42B9D76C9000AF69F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054F32B9D76C9000AF69F /* ProfileViewModel.swift */; };
+		394054F72B9D772A000AF69F /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054F62B9D772A000AF69F /* Observable.swift */; };
+		394054F92B9DB058000AF69F /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054F82B9DB058000AF69F /* Extension + Date.swift */; };
+		394054FB2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054FA2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift */; };
+		394054FD2B9DE331000AF69F /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */; };
 		396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBC2B99839200613BFE /* AppDelegate.swift */; };
 		396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBE2B99839200613BFE /* SceneDelegate.swift */; };
 		396D2FC12B99839200613BFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FC02B99839200613BFE /* ViewController.swift */; };
@@ -43,6 +49,11 @@
 		394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderBottomSheetViewController.swift; sourceTree = "<group>"; };
 		394054E82B9C1F8B000AF69F /* Extension + UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIButton.swift"; sourceTree = "<group>"; };
 		394054EE2B9C311C000AF69F /* Extension + TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + TextField.swift"; sourceTree = "<group>"; };
+		394054F32B9D76C9000AF69F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		394054F62B9D772A000AF69F /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		394054F82B9DB058000AF69F /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
+		394054FA2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraBottomSheetViewController.swift; sourceTree = "<group>"; };
+		394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
 		396D2FB92B99839200613BFE /* PetDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396D2FBC2B99839200613BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		396D2FBE2B99839200613BFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -75,12 +86,24 @@
 				396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */,
 				396D2FDF2B9ADF7200613BFE /* SnapKit in Frameworks */,
 				394054EB2B9C2812000AF69F /* Realm in Frameworks */,
+				394054F22B9D74A2000AF69F /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		394054F52B9D76FB000AF69F /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				394054EE2B9C311C000AF69F /* Extension + TextField.swift */,
+				394054E82B9C1F8B000AF69F /* Extension + UIButton.swift */,
+				394054F82B9DB058000AF69F /* Extension + Date.swift */,
+				394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		396D2FB02B99839200613BFE = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +124,7 @@
 		396D2FBB2B99839200613BFE /* PetDiary */ = {
 			isa = PBXGroup;
 			children = (
+				394054F52B9D76FB000AF69F /* Extension */,
 				396D2FF22B9BE7E300613BFE /* Realm */,
 				396D2FE72B9B5AD100613BFE /* Style */,
 				396D2FDA2B9ADE8D00613BFE /* Custom */,
@@ -113,8 +137,7 @@
 				396D2FC52B99839700613BFE /* Assets.xcassets */,
 				396D2FC72B99839700613BFE /* LaunchScreen.storyboard */,
 				396D2FCA2B99839700613BFE /* Info.plist */,
-				394054E82B9C1F8B000AF69F /* Extension + UIButton.swift */,
-				394054EE2B9C311C000AF69F /* Extension + TextField.swift */,
+				394054F62B9D772A000AF69F /* Observable.swift */,
 			);
 			path = PetDiary;
 			sourceTree = "<group>";
@@ -126,6 +149,8 @@
 				396D2FF02B9B65FB00613BFE /* ProfileView.swift */,
 				394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */,
 				394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */,
+				394054F32B9D76C9000AF69F /* ProfileViewModel.swift */,
+				394054FA2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -190,6 +215,7 @@
 				396D2FFF2B9BEDA000613BFE /* RealmSwift */,
 				394054EA2B9C2812000AF69F /* Realm */,
 				394054EC2B9C2812000AF69F /* RealmSwift */,
+				394054F12B9D74A2000AF69F /* IQKeyboardManagerSwift */,
 			);
 			productName = PetDiary;
 			productReference = 396D2FB92B99839200613BFE /* PetDiary.app */;
@@ -222,6 +248,7 @@
 			packageReferences = (
 				396D2FDD2B9ADF7200613BFE /* XCRemoteSwiftPackageReference "SnapKit" */,
 				396D2FFC2B9BEDA000613BFE /* XCRemoteSwiftPackageReference "realm-swift" */,
+				394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 			);
 			productRefGroup = 396D2FBA2B99839200613BFE /* Products */;
 			projectDirPath = "";
@@ -252,6 +279,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				396D2FE32B9AE5C100613BFE /* ProfileInputTextField.swift in Sources */,
+				394054FB2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift in Sources */,
+				394054F92B9DB058000AF69F /* Extension + Date.swift in Sources */,
 				394054E92B9C1F8B000AF69F /* Extension + UIButton.swift in Sources */,
 				394054EF2B9C311C000AF69F /* Extension + TextField.swift in Sources */,
 				396D2FF12B9B65FB00613BFE /* ProfileView.swift in Sources */,
@@ -261,10 +290,13 @@
 				396D2FEF2B9B65AC00613BFE /* BaseView.swift in Sources */,
 				396D2FC12B99839200613BFE /* ViewController.swift in Sources */,
 				396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */,
+				394054F72B9D772A000AF69F /* Observable.swift in Sources */,
 				396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */,
 				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
 				396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */,
 				396D2FFB2B9BEB7000613BFE /* PetRepository.swift in Sources */,
+				394054F42B9D76C9000AF69F /* ProfileViewModel.swift in Sources */,
+				394054FD2B9DE331000AF69F /* Extension + UIViewController.swift in Sources */,
 				396D2FDC2B9ADEA900613BFE /* CameraButton.swift in Sources */,
 				396D2FF42B9BE7F800613BFE /* PetTable.swift in Sources */,
 				396D2FE92B9B5AE000613BFE /* Color.swift in Sources */,
@@ -421,7 +453,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 47HVCF82JP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetDiary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -449,7 +481,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 47HVCF82JP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetDiary/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -494,6 +526,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.1;
+			};
+		};
 		396D2FDD2B9ADF7200613BFE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -522,6 +562,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 396D2FFC2B9BEDA000613BFE /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		394054F12B9D74A2000AF69F /* IQKeyboardManagerSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
+			productName = IQKeyboardManagerSwift;
 		};
 		396D2FDE2B9ADF7200613BFE /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
