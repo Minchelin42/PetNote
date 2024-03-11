@@ -20,6 +20,8 @@
 		394054F92B9DB058000AF69F /* Extension + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054F82B9DB058000AF69F /* Extension + Date.swift */; };
 		394054FB2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054FA2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift */; };
 		394054FD2B9DE331000AF69F /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */; };
+		394055002B9E0294000AF69F /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 394054FF2B9E0294000AF69F /* FSCalendar */; };
+		394055052B9EF681000AF69F /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394055042B9EF681000AF69F /* PlanViewController.swift */; };
 		396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBC2B99839200613BFE /* AppDelegate.swift */; };
 		396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBE2B99839200613BFE /* SceneDelegate.swift */; };
 		396D2FC12B99839200613BFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FC02B99839200613BFE /* ViewController.swift */; };
@@ -41,6 +43,8 @@
 		396D2FFB2B9BEB7000613BFE /* PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FFA2B9BEB7000613BFE /* PetRepository.swift */; };
 		396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FFD2B9BEDA000613BFE /* Realm */; };
 		396D30002B9BEDA000613BFE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FFF2B9BEDA000613BFE /* RealmSwift */; };
+		39C1D64E2B9F3EF100418B68 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64D2B9F3EF100418B68 /* PlanView.swift */; };
+		39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +58,7 @@
 		394054F82B9DB058000AF69F /* Extension + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + Date.swift"; sourceTree = "<group>"; };
 		394054FA2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraBottomSheetViewController.swift; sourceTree = "<group>"; };
 		394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
+		394055042B9EF681000AF69F /* PlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
 		396D2FB92B99839200613BFE /* PetDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396D2FBC2B99839200613BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		396D2FBE2B99839200613BFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +79,8 @@
 		396D2FF02B9B65FB00613BFE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		396D2FF32B9BE7F800613BFE /* PetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTable.swift; sourceTree = "<group>"; };
 		396D2FFA2B9BEB7000613BFE /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
+		39C1D64D2B9F3EF100418B68 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
+		39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +93,7 @@
 				396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */,
 				396D2FDF2B9ADF7200613BFE /* SnapKit in Frameworks */,
 				394054EB2B9C2812000AF69F /* Realm in Frameworks */,
+				394055002B9E0294000AF69F /* FSCalendar in Frameworks */,
 				394054F22B9D74A2000AF69F /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -102,6 +110,16 @@
 				394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		394055012B9E031B000AF69F /* Plan */ = {
+			isa = PBXGroup;
+			children = (
+				39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */,
+				394055042B9EF681000AF69F /* PlanViewController.swift */,
+				39C1D64D2B9F3EF100418B68 /* PlanView.swift */,
+			);
+			path = Plan;
 			sourceTree = "<group>";
 		};
 		396D2FB02B99839200613BFE = {
@@ -129,6 +147,7 @@
 				396D2FE72B9B5AD100613BFE /* Style */,
 				396D2FDA2B9ADE8D00613BFE /* Custom */,
 				396D2FD52B99915D00613BFE /* Base */,
+				394055012B9E031B000AF69F /* Plan */,
 				396D2FD22B998A8F00613BFE /* Profile */,
 				396D2FBC2B99839200613BFE /* AppDelegate.swift */,
 				396D2FBE2B99839200613BFE /* SceneDelegate.swift */,
@@ -216,6 +235,7 @@
 				394054EA2B9C2812000AF69F /* Realm */,
 				394054EC2B9C2812000AF69F /* RealmSwift */,
 				394054F12B9D74A2000AF69F /* IQKeyboardManagerSwift */,
+				394054FF2B9E0294000AF69F /* FSCalendar */,
 			);
 			productName = PetDiary;
 			productReference = 396D2FB92B99839200613BFE /* PetDiary.app */;
@@ -249,6 +269,7 @@
 				396D2FDD2B9ADF7200613BFE /* XCRemoteSwiftPackageReference "SnapKit" */,
 				396D2FFC2B9BEDA000613BFE /* XCRemoteSwiftPackageReference "realm-swift" */,
 				394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				394054FE2B9E0294000AF69F /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 396D2FBA2B99839200613BFE /* Products */;
 			projectDirPath = "";
@@ -284,6 +305,7 @@
 				394054E92B9C1F8B000AF69F /* Extension + UIButton.swift in Sources */,
 				394054EF2B9C311C000AF69F /* Extension + TextField.swift in Sources */,
 				396D2FF12B9B65FB00613BFE /* ProfileView.swift in Sources */,
+				39C1D64E2B9F3EF100418B68 /* PlanView.swift in Sources */,
 				394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */,
 				396D2FEB2B9B5C5400613BFE /* ProfileLabel.swift in Sources */,
 				394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */,
@@ -294,6 +316,8 @@
 				396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */,
 				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
 				396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */,
+				39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */,
+				394055052B9EF681000AF69F /* PlanViewController.swift in Sources */,
 				396D2FFB2B9BEB7000613BFE /* PetRepository.swift in Sources */,
 				394054F42B9D76C9000AF69F /* ProfileViewModel.swift in Sources */,
 				394054FD2B9DE331000AF69F /* Extension + UIViewController.swift in Sources */,
@@ -534,6 +558,14 @@
 				minimumVersion = 7.0.1;
 			};
 		};
+		394054FE2B9E0294000AF69F /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
 		396D2FDD2B9ADF7200613BFE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -567,6 +599,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
 			productName = IQKeyboardManagerSwift;
+		};
+		394054FF2B9E0294000AF69F /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 394054FE2B9E0294000AF69F /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 		396D2FDE2B9ADF7200613BFE /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
