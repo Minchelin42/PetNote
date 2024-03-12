@@ -20,4 +20,14 @@ extension UITextField {
         
         self.inputAccessoryView = toolbar
     }
+    
+    func underlined(viewWidth: CGFloat, viewHeight: Int, color: UIColor) {
+        let border = CALayer()
+        let width = CGFloat(1.5)
+        border.borderColor = color.cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height + CGFloat(viewHeight), width: viewWidth, height: width)
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+    }
 }
+

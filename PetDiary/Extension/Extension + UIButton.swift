@@ -11,6 +11,7 @@ import UIKit
 enum DateType {
     case firstMeet
     case birth
+    case plan
 }
 
 private var datetypeKey: UInt8 = 0

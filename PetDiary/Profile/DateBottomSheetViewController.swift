@@ -35,6 +35,8 @@ class DateBottomSheetViewController: UIViewController {
     let datePicker = UIDatePicker()
     
     var selectDate: ((Date?) -> Void)?
+    var time: Date? = nil
+    var selectTime: ((Date) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,8 +55,12 @@ class DateBottomSheetViewController: UIViewController {
         
         if self.dateType == .birth {
             selectDate?(viewModel.birth.value)
-        } else {
+        } else if dateType == .firstMeet {
             selectDate?(viewModel.firstMeet.value)
+        } else {
+            if let time = time {
+                selectTime?(time)
+            }
         }
     }
     
@@ -109,7 +115,11 @@ class DateBottomSheetViewController: UIViewController {
     
     private func configureView() {
         datePicker.preferredDatePickerStyle = .wheels
-        datePicker.datePickerMode = .date
+        if dateType == .plan {
+            datePicker.datePickerMode = .time
+        } else {
+            datePicker.datePickerMode = .date
+        }
         datePicker.locale = Locale(identifier: "ko_KR")
         
         clearButton.addTarget(self, action: #selector(clearButtonClicked), for: .touchUpInside)
@@ -119,9 +129,12 @@ class DateBottomSheetViewController: UIViewController {
         print(datePicker.date)
         if self.dateType == .birth {
             viewModel.birth.value = datePicker.date
-        } else {
+        } else if dateType == .firstMeet{
             viewModel.firstMeet.value = datePicker.date
             print(viewModel.firstMeet.value)
+        } else {
+            self.time = datePicker.date
+            print(datePicker.date.changeDateToTime())
         }
         bottomSheetDisappear()
     }
