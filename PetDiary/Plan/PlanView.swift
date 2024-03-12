@@ -70,13 +70,12 @@ class PlanView: BaseView {
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(labelView.snp.bottom)
+            make.top.equalTo(labelView.snp.bottom).offset(8)
             make.horizontalEdges.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
     
     override func configureView() {
-        
         setCalendar()
         dayLabel.text = "루비와 함께한 지 1,920일 째 일지"
         collectionView.backgroundColor = .clear
@@ -95,7 +94,9 @@ class PlanView: BaseView {
         calendar.headerHeight = 60
         calendar.appearance.headerMinimumDissolvedAlpha = 0.0
         calendar.appearance.titleWeekendColor = Color.darkGreen
-        
+        calendar.appearance.todayColor = Color.lightGreen
+        calendar.appearance.eventDefaultColor = Color.green
+        calendar.appearance.eventSelectionColor = Color.green
         
         calendar.backgroundColor = .white
         calendar.clipsToBounds = true

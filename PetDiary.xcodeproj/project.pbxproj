@@ -45,6 +45,14 @@
 		396D30002B9BEDA000613BFE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FFF2B9BEDA000613BFE /* RealmSwift */; };
 		39C1D64E2B9F3EF100418B68 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64D2B9F3EF100418B68 /* PlanView.swift */; };
 		39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */; };
+		39CFA7762BA018450057827F /* NewPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7752BA018450057827F /* NewPlanViewController.swift */; };
+		39CFA7782BA01BE80057827F /* NewPlanLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7772BA01BE80057827F /* NewPlanLabel.swift */; };
+		39CFA77D2BA01CFF0057827F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 39CFA77C2BA01CFF0057827F /* Alamofire */; };
+		39CFA77F2BA025680057827F /* NewPlanTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA77E2BA025680057827F /* NewPlanTextField.swift */; };
+		39CFA7812BA037560057827F /* GreenLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7802BA037560057827F /* GreenLine.swift */; };
+		39CFA7842BA0B4D60057827F /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 39CFA7832BA0B4D60057827F /* Toast */; };
+		39CFA7862BA0C0920057827F /* PlanTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7852BA0C0920057827F /* PlanTable.swift */; };
+		39CFA7882BA0C0A20057827F /* PlanRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7872BA0C0A20057827F /* PlanRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +89,12 @@
 		396D2FFA2B9BEB7000613BFE /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
 		39C1D64D2B9F3EF100418B68 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCollectionViewCell.swift; sourceTree = "<group>"; };
+		39CFA7752BA018450057827F /* NewPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlanViewController.swift; sourceTree = "<group>"; };
+		39CFA7772BA01BE80057827F /* NewPlanLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlanLabel.swift; sourceTree = "<group>"; };
+		39CFA77E2BA025680057827F /* NewPlanTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlanTextField.swift; sourceTree = "<group>"; };
+		39CFA7802BA037560057827F /* GreenLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreenLine.swift; sourceTree = "<group>"; };
+		39CFA7852BA0C0920057827F /* PlanTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTable.swift; sourceTree = "<group>"; };
+		39CFA7872BA0C0A20057827F /* PlanRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +103,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				394054ED2B9C2812000AF69F /* RealmSwift in Frameworks */,
+				39CFA77D2BA01CFF0057827F /* Alamofire in Frameworks */,
 				396D30002B9BEDA000613BFE /* RealmSwift in Frameworks */,
+				39CFA7842BA0B4D60057827F /* Toast in Frameworks */,
 				396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */,
 				396D2FDF2B9ADF7200613BFE /* SnapKit in Frameworks */,
 				394054EB2B9C2812000AF69F /* Realm in Frameworks */,
@@ -147,6 +163,7 @@
 				396D2FE72B9B5AD100613BFE /* Style */,
 				396D2FDA2B9ADE8D00613BFE /* Custom */,
 				396D2FD52B99915D00613BFE /* Base */,
+				39CFA7742BA018210057827F /* NewPlan */,
 				394055012B9E031B000AF69F /* Plan */,
 				396D2FD22B998A8F00613BFE /* Profile */,
 				396D2FBC2B99839200613BFE /* AppDelegate.swift */,
@@ -191,6 +208,9 @@
 				396D2FE22B9AE5C100613BFE /* ProfileInputTextField.swift */,
 				396D2FEC2B9B5DE800613BFE /* ProfileInputButton.swift */,
 				394054E42B9C0F60000AF69F /* CompleteButton.swift */,
+				39CFA7772BA01BE80057827F /* NewPlanLabel.swift */,
+				39CFA77E2BA025680057827F /* NewPlanTextField.swift */,
+				39CFA7802BA037560057827F /* GreenLine.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -208,8 +228,18 @@
 			children = (
 				396D2FF32B9BE7F800613BFE /* PetTable.swift */,
 				396D2FFA2B9BEB7000613BFE /* PetRepository.swift */,
+				39CFA7852BA0C0920057827F /* PlanTable.swift */,
+				39CFA7872BA0C0A20057827F /* PlanRepository.swift */,
 			);
 			path = Realm;
+			sourceTree = "<group>";
+		};
+		39CFA7742BA018210057827F /* NewPlan */ = {
+			isa = PBXGroup;
+			children = (
+				39CFA7752BA018450057827F /* NewPlanViewController.swift */,
+			);
+			path = NewPlan;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +266,8 @@
 				394054EC2B9C2812000AF69F /* RealmSwift */,
 				394054F12B9D74A2000AF69F /* IQKeyboardManagerSwift */,
 				394054FF2B9E0294000AF69F /* FSCalendar */,
+				39CFA77C2BA01CFF0057827F /* Alamofire */,
+				39CFA7832BA0B4D60057827F /* Toast */,
 			);
 			productName = PetDiary;
 			productReference = 396D2FB92B99839200613BFE /* PetDiary.app */;
@@ -270,6 +302,8 @@
 				396D2FFC2B9BEDA000613BFE /* XCRemoteSwiftPackageReference "realm-swift" */,
 				394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				394054FE2B9E0294000AF69F /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				39CFA77B2BA01CFF0057827F /* XCRemoteSwiftPackageReference "Alamofire" */,
+				39CFA7822BA0B4D60057827F /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 396D2FBA2B99839200613BFE /* Products */;
 			projectDirPath = "";
@@ -302,6 +336,7 @@
 				396D2FE32B9AE5C100613BFE /* ProfileInputTextField.swift in Sources */,
 				394054FB2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift in Sources */,
 				394054F92B9DB058000AF69F /* Extension + Date.swift in Sources */,
+				39CFA77F2BA025680057827F /* NewPlanTextField.swift in Sources */,
 				394054E92B9C1F8B000AF69F /* Extension + UIButton.swift in Sources */,
 				394054EF2B9C311C000AF69F /* Extension + TextField.swift in Sources */,
 				396D2FF12B9B65FB00613BFE /* ProfileView.swift in Sources */,
@@ -309,6 +344,8 @@
 				394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */,
 				396D2FEB2B9B5C5400613BFE /* ProfileLabel.swift in Sources */,
 				394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */,
+				39CFA7812BA037560057827F /* GreenLine.swift in Sources */,
+				39CFA7762BA018450057827F /* NewPlanViewController.swift in Sources */,
 				396D2FEF2B9B65AC00613BFE /* BaseView.swift in Sources */,
 				396D2FC12B99839200613BFE /* ViewController.swift in Sources */,
 				396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */,
@@ -317,13 +354,16 @@
 				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
 				396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */,
 				39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */,
+				39CFA7882BA0C0A20057827F /* PlanRepository.swift in Sources */,
 				394055052B9EF681000AF69F /* PlanViewController.swift in Sources */,
 				396D2FFB2B9BEB7000613BFE /* PetRepository.swift in Sources */,
 				394054F42B9D76C9000AF69F /* ProfileViewModel.swift in Sources */,
 				394054FD2B9DE331000AF69F /* Extension + UIViewController.swift in Sources */,
 				396D2FDC2B9ADEA900613BFE /* CameraButton.swift in Sources */,
 				396D2FF42B9BE7F800613BFE /* PetTable.swift in Sources */,
+				39CFA7782BA01BE80057827F /* NewPlanLabel.swift in Sources */,
 				396D2FE92B9B5AE000613BFE /* Color.swift in Sources */,
+				39CFA7862BA0C0920057827F /* PlanTable.swift in Sources */,
 				396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */,
 				394054E72B9C1D5A000AF69F /* GenderBottomSheetViewController.swift in Sources */,
 			);
@@ -582,6 +622,22 @@
 				version = 10.47.0;
 			};
 		};
+		39CFA77B2BA01CFF0057827F /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.0;
+			};
+		};
+		39CFA7822BA0B4D60057827F /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -619,6 +675,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 396D2FFC2B9BEDA000613BFE /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		39CFA77C2BA01CFF0057827F /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39CFA77B2BA01CFF0057827F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		39CFA7832BA0B4D60057827F /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39CFA7822BA0B4D60057827F /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
