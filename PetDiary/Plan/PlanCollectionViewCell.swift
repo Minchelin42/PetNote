@@ -7,8 +7,9 @@
 
 import UIKit
 import SnapKit
+import SwipeCellKit
 
-class PlanCollectionViewCell: UICollectionViewCell {
+class PlanCollectionViewCell: SwipeCollectionViewCell {
     
     let baseView = UIView()
     let memoView = UIView()

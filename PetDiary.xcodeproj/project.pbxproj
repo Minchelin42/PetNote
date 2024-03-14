@@ -53,6 +53,7 @@
 		39CFA7842BA0B4D60057827F /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 39CFA7832BA0B4D60057827F /* Toast */; };
 		39CFA7862BA0C0920057827F /* PlanTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7852BA0C0920057827F /* PlanTable.swift */; };
 		39CFA7882BA0C0A20057827F /* PlanRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7872BA0C0A20057827F /* PlanRepository.swift */; };
+		39CFA78F2BA2BFFF0057827F /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = 39CFA78E2BA2BFFF0057827F /* SwipeCellKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,7 @@
 				396D2FDF2B9ADF7200613BFE /* SnapKit in Frameworks */,
 				394054EB2B9C2812000AF69F /* Realm in Frameworks */,
 				394055002B9E0294000AF69F /* FSCalendar in Frameworks */,
+				39CFA78F2BA2BFFF0057827F /* SwipeCellKit in Frameworks */,
 				394054F22B9D74A2000AF69F /* IQKeyboardManagerSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -268,6 +270,7 @@
 				394054FF2B9E0294000AF69F /* FSCalendar */,
 				39CFA77C2BA01CFF0057827F /* Alamofire */,
 				39CFA7832BA0B4D60057827F /* Toast */,
+				39CFA78E2BA2BFFF0057827F /* SwipeCellKit */,
 			);
 			productName = PetDiary;
 			productReference = 396D2FB92B99839200613BFE /* PetDiary.app */;
@@ -304,6 +307,7 @@
 				394054FE2B9E0294000AF69F /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				39CFA77B2BA01CFF0057827F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				39CFA7822BA0B4D60057827F /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				39CFA78D2BA2BFFF0057827F /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
 			);
 			productRefGroup = 396D2FBA2B99839200613BFE /* Products */;
 			projectDirPath = "";
@@ -638,6 +642,14 @@
 				minimumVersion = 5.1.0;
 			};
 		};
+		39CFA78D2BA2BFFF0057827F /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -685,6 +697,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 39CFA7822BA0B4D60057827F /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		39CFA78E2BA2BFFF0057827F /* SwipeCellKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 39CFA78D2BA2BFFF0057827F /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
+			productName = SwipeCellKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

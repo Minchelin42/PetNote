@@ -10,6 +10,7 @@ import FSCalendar
 import SnapKit
 import RealmSwift
 import Toast
+import SwipeCellKit
 
 class PlanViewController: UIViewController {
     
@@ -65,8 +66,9 @@ class PlanViewController: UIViewController {
     @objc func plusButtonClicked() {
         let vc = NewPlanViewController()
         vc.selectDate = self.selectDate
-        vc.saveComplete = { save in
-            if save {
+        vc.saveComplete = { type, save in
+            print(type)
+            if save && type == .new {
                 var style = ToastStyle()
                 style.backgroundColor = Color.lightGreen!
                 style.messageColor = .white
@@ -137,7 +139,7 @@ extension PlanViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
     
 }
 
-extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelegate, SwipeCollectionViewCellDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.list.count
     }
@@ -146,7 +148,7 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Plan", for: indexPath) as! PlanCollectionViewCell
         
         let item = list[indexPath.row]
-        
+        cell.delegate = self
         cell.titleLabel.text = item.title
         cell.memoLabel.text = item.memo
         cell.alarmLabel.text = item.alarm ? item.time?.changeDateToTime() : "알람 없음"
@@ -154,7 +156,111 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, editActionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let edit = SwipeAction(style: .default, title: "Edit") { action, indexPath in
+            
+            let vc = NewPlanViewController()
+            vc.type = .edit
+            vc.id = self.list[indexPath.row].id
+            vc.nowTitle = self.list[indexPath.row].title
+            vc.nowMemo = self.list[indexPath.row].memo
+            vc.selectDate = self.list[indexPath.row].date
+            vc.isSwitchOn = self.list[indexPath.row].alarm
+            vc.nowTime = self.list[indexPath.row].time
+            
+            vc.saveComplete = { type, save in
+                if save && type == .edit {
+                    var style = ToastStyle()
+                    style.backgroundColor = Color.lightGreen!
+                    style.messageColor = .white
+                    style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+                    self.view.makeToast("할 일이 수정되었습니다", duration: 2.0, position: .bottom, style: style)
+                }
+            }
+
+            self.navigationController?.pushViewController(vc, animated: true)
+            print("edit 클릭")
+            
+            return
+        }
+        
+        let delete = SwipeAction(style: .default, title: "Delete") { action, indexPath in
+            
+            print("delete 클릭")
+            
+            self.repository.deleteItem(self.list[indexPath.row])
+            self.mainView.collectionView.reloadData()
+            
+            return
+        }
+        
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 19.0, weight: .medium, scale: .medium)
+        let xlargeConfig = UIImage.SymbolConfiguration(pointSize: 23.0, weight: .medium, scale: .medium)
+        
+        edit.image = UIImage(systemName: "pencil", withConfiguration: xlargeConfig)?.withTintColor(.white, renderingMode: .alwaysTemplate).addBackgroundCircle(Color.lightGreen)
+        edit.backgroundColor = .clear
+        edit.textColor = .lightGreen
+        edit.font = .systemFont(ofSize: 13, weight: .semibold)
+   
+        edit.transitionDelegate = ScaleTransition.default
+        
+        delete.image = UIImage(systemName: "trash", withConfiguration: largeConfig)?.withTintColor(.white, renderingMode: .alwaysTemplate).addBackgroundCircle(Color.darkGreen)
+        delete.backgroundColor = .clear
+        delete.textColor = .darkGreen
+        delete.font = .systemFont(ofSize: 13, weight: .semibold)
+   
+        delete.transitionDelegate = ScaleTransition.default
+
+        return [edit, delete]
+    }
     
+    
+    func collectionView(_ collectionView: UICollectionView, editActionsOptionsForItemAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        
+        let expansion = SwipeExpansionStyle(target: .percentage(1.0), additionalTriggers: [], elasticOverscroll: true, completionAnimation: .bounce)
+        
+        var options = SwipeOptions()
+        options.expansionDelegate = ScaleAndAlphaExpansion.default
+        options.expansionStyle = .none
+        options.backgroundColor = .clear
+        options.transitionStyle = .drag
+        return options
+    }
+    
+}
+
+extension UIImage {
+
+    func addBackgroundCircle(_ color: UIColor?) -> UIImage? {
+
+        let circleDiameter = max(size.width * 2, size.height * 2)
+        let circleRadius = circleDiameter * 0.5
+        let circleSize = CGSize(width: circleDiameter, height: circleDiameter)
+        let circleFrame = CGRect(x: 0, y: 0, width: circleSize.width, height: circleSize.height)
+        let imageFrame = CGRect(x: circleRadius - (size.width * 0.5), y: circleRadius - (size.height * 0.5), width: size.width, height: size.height)
+
+        let view = UIView(frame: circleFrame)
+        view.backgroundColor = color ?? .systemRed
+        view.layer.cornerRadius = circleDiameter * 0.5
+
+        UIGraphicsBeginImageContextWithOptions(circleSize, false, UIScreen.main.scale)
+
+        let renderer = UIGraphicsImageRenderer(size: circleSize)
+        let circleImage = renderer.image { ctx in
+            view.drawHierarchy(in: circleFrame, afterScreenUpdates: true)
+        }
+
+        circleImage.draw(in: circleFrame, blendMode: .normal, alpha: 1.0)
+        draw(in: imageFrame, blendMode: .normal, alpha: 1.0)
+
+        let image: UIImage? = UIGraphicsGetImageFromCurrentImageContext()
+
+        UIGraphicsEndImageContext()
+
+        return image
+    }
 }
 
 

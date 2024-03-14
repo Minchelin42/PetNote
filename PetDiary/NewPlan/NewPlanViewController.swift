@@ -7,6 +7,13 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
+import Toast
+
+enum PlanType {
+    case new
+    case edit
+}
 
 class NewPlanViewController: UIViewController {
     
@@ -45,12 +52,17 @@ class NewPlanViewController: UIViewController {
     }()
     let alarmTimeLine = GreenLine()
     
-    var nowTime: Date?
+    var type = PlanType.new
     
+    var id: ObjectId?
+    var nowTitle = ""
+    var nowMemo = ""
+    var nowTime: Date?
+    var isSwitchOn = false
     var selectDate: Date = Date()
     
     var save: Bool = false
-    var saveComplete: ((Bool) -> Void)?
+    var saveComplete: ((PlanType, Bool) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +81,7 @@ class NewPlanViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        saveComplete?(self.save)
+        saveComplete?(self.type, self.save)
         navigationController?.isNavigationBarHidden = true
     }
     
@@ -196,9 +208,11 @@ class NewPlanViewController: UIViewController {
         UINavigationBar.appearance().tintColor = Color.darkGreen
         
         titleLabel.text = "할 일"
+        titleTextField.text = nowTitle
         titleTextField.underlined(viewWidth: view.bounds.width - 40, viewHeight: 30, color: Color.darkGreen!)
         
         memoLabel.text = "메모"
+        memoTextView.text = nowMemo
         memoTextView.backgroundColor = .clear
         memoTextView.font = .systemFont(ofSize: 14)
         memoTextView.tintColor = Color.darkGreen
@@ -209,13 +223,13 @@ class NewPlanViewController: UIViewController {
         alarmLabel.text = "알람 여부"
         
         alarmSwitch.onTintColor = Color.green
+        alarmSwitch.setOn(isSwitchOn, animated: false)
+        toggleSwitch(alarmSwitch)
         alarmSwitch.addTarget(self, action: #selector(toggleSwitch), for: UIControl.Event.valueChanged)
 
-        alarmTimeView.isHidden = true
-        
         alarmTimeLabel.text = "알람 설정"
 
-        alarmTimeButton.setTitle("시간 선택", for: .normal)
+        alarmTimeButton.setTitle(nowTime != nil ? nowTime?.changeDateToTime() : "시간 선택", for: .normal)
         alarmTimeButton.addTarget(self, action: #selector(alarmTimeButtonClicked), for: .touchUpInside)
     }
     
@@ -239,10 +253,35 @@ class NewPlanViewController: UIViewController {
     }
     
     @objc func rightButtonItemClicked() {
-        repository.printLink()
-        let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.selectDate, alarm: alarmSwitch.isOn, time: self.nowTime)
-        repository.createItem(item)
-        self.save = true
+        
+        if titleTextField.text!.isEmpty {
+            var style = ToastStyle()
+            style.backgroundColor = Color.lightGreen!
+            style.messageColor = .white
+            style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+            self.view.makeToast("제목을 입력해주세요", duration: 2.0, position: .bottom, style: style)
+            return
+        }
+        
+        if alarmSwitch.isOn && nowTime == nil {
+            var style = ToastStyle()
+            style.backgroundColor = Color.lightGreen!
+            style.messageColor = .white
+            style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+            self.view.makeToast("알람 시간을 입력해주세요", duration: 2.0, position: .bottom, style: style)
+            return
+        }
+
+        if type == .new {
+            repository.printLink()
+            let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.selectDate, alarm: alarmSwitch.isOn, time: self.nowTime)
+            repository.createItem(item)
+            self.save = true
+        } else {
+            repository.editItem(id: self.id, title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.selectDate, alarm: alarmSwitch.isOn, time: self.nowTime)
+            self.save = true
+            
+        }
         navigationController?.popViewController(animated: true)
     }
     
