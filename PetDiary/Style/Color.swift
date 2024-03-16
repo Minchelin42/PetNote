@@ -11,6 +11,7 @@ enum Color {
     static let lightGreen = UIColor(named: "lightGreen")
     static let darkGreen = UIColor(named: "darkGreen")
     static let green = UIColor(named: "green")
+    static let moreLightGreen = UIColor(named: "moreLightGreen")
     static let lightGray = UIColor(named: "lightGray")
     static let darkGray = UIColor(named: "darkGray")
     static let font = UIColor(named: "font")

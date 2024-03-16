@@ -30,11 +30,11 @@ final class PlanRepository {
         }
     }
     
-    func editItem(id: ObjectId?, title: String, memo: String, date: Date, alarm: Bool, time: Date?) {
+    func editItem(id: ObjectId?, title: String, memo: String, date: Date, alarm: Bool, time: Date?, firstDate: Date, lastDate: Date?) {
         do {
             try realm.write {
                 realm.create(PlanTable.self,
-                             value: ["id": id, "title": title, "memo": memo, "date": date, "alarm": alarm, "time": time],
+                             value: ["id": id, "title": title, "memo": memo, "date": date, "alarm": alarm, "time": time, "firstDate": firstDate, "lastDate": lastDate],
                              update: .modified)
             }
         } catch {

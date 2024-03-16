@@ -65,7 +65,7 @@ class PlanViewController: UIViewController {
 
     @objc func plusButtonClicked() {
         let vc = NewPlanViewController()
-        vc.selectDate = self.selectDate
+        vc.firstDate = self.selectDate
         vc.saveComplete = { type, save in
             print(type)
             if save && type == .new {
@@ -134,6 +134,7 @@ extension PlanViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
         
         self.list = repository.fetch().filter(predicate)
         self.mainView.collectionView.reloadData()
+        
         return true
     }
     
@@ -163,12 +164,16 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
             
             let vc = NewPlanViewController()
             vc.type = .edit
+            
             vc.id = self.list[indexPath.row].id
             vc.nowTitle = self.list[indexPath.row].title
             vc.nowMemo = self.list[indexPath.row].memo
-            vc.selectDate = self.list[indexPath.row].date
+//            vc.selectDate = self.list[indexPath.row].date
             vc.isSwitchOn = self.list[indexPath.row].alarm
             vc.nowTime = self.list[indexPath.row].time
+            vc.registerDate = self.list[indexPath.row].registerDate
+            vc.firstDate = self.list[indexPath.row].firstDate
+            vc.lastDate = self.list[indexPath.row].lastDate
             
             vc.saveComplete = { type, save in
                 if save && type == .edit {
@@ -190,7 +195,16 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
             
             print("delete 클릭")
             
-            self.repository.deleteItem(self.list[indexPath.row])
+            let realm = try! Realm()
+            try! realm.write {
+                let predicate = NSPredicate(format: "registerDate == %@", self.list[indexPath.row].registerDate as NSDate)
+
+                let prePlan = realm.objects(PlanTable.self).filter(predicate)
+                
+                realm.delete(prePlan)
+            }
+
+            self.mainView.calendar.reloadData()
             self.mainView.collectionView.reloadData()
             
             return

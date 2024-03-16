@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RealmSwift
 import Toast
+import RealmSwift
 
 enum PlanType {
     case new
@@ -28,7 +29,7 @@ class NewPlanViewController: UIViewController {
     
     let dateLabel = NewPlanLabel()
     let dateButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.setTitleColor(Color.darkGreen, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
         return button
@@ -42,13 +43,13 @@ class NewPlanViewController: UIViewController {
     let alarmTimeView = UIView()
     let alarmTimeLabel = NewPlanLabel()
     let alarmTimeButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.clipsToBounds = true
         button.layer.cornerRadius = 12
         button.backgroundColor = Color.green
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-       return button
+        return button
     }()
     let alarmTimeLine = GreenLine()
     
@@ -59,15 +60,30 @@ class NewPlanViewController: UIViewController {
     var nowMemo = ""
     var nowTime: Date?
     var isSwitchOn = false
-    var selectDate: Date = Date()
+    var registerDate: Date = Date()
+    var firstDate: Date = Date()
+    var lastDate: Date? = nil
+    
+    var dateArray: [Date] = []
     
     var save: Bool = false
     var saveComplete: ((PlanType, Bool) -> Void)?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        
+        var nowDate = firstDate
+        
+        if let lastDate = self.lastDate {
+            while nowDate <= lastDate {
+                dateArray.append(nowDate)
+                nowDate = Calendar.current.date(byAdding: .day, value: 1,to: nowDate)!
+            }
+        } else {
+            dateArray.append(firstDate)
+        }
         
         configureHierarchy()
         configureLayout()
@@ -198,7 +214,7 @@ class NewPlanViewController: UIViewController {
     }
     
     func configureView() {
-
+        
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), style: .plain, target: self, action: #selector(leftButtonItemClicked))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(rightButtonItemClicked))
@@ -213,22 +229,28 @@ class NewPlanViewController: UIViewController {
         
         memoLabel.text = "메모"
         memoTextView.text = nowMemo
+        memoTextView.textColor = .black
         memoTextView.backgroundColor = .clear
         memoTextView.font = .systemFont(ofSize: 14)
         memoTextView.tintColor = Color.darkGreen
         
         dateLabel.text = "날짜"
-        dateButton.setTitle("\(selectDate.changeDateFormat())", for: .normal)
-
+        if let lastDate = self.lastDate {
+            dateButton.setTitle("\(self.firstDate.changeDateFormat()) ~ \(lastDate.changeDateFormat())", for: .normal)
+        } else {
+            dateButton.setTitle("\(firstDate.changeDateFormat())", for: .normal)
+        }
+        dateButton.addTarget(self, action: #selector(dateButtonClicked), for: .touchUpInside)
+        
         alarmLabel.text = "알람 여부"
         
         alarmSwitch.onTintColor = Color.green
         alarmSwitch.setOn(isSwitchOn, animated: false)
         toggleSwitch(alarmSwitch)
         alarmSwitch.addTarget(self, action: #selector(toggleSwitch), for: UIControl.Event.valueChanged)
-
+        
         alarmTimeLabel.text = "알람 설정"
-
+        
         alarmTimeButton.setTitle(nowTime != nil ? nowTime?.changeDateToTime() : "시간 선택", for: .normal)
         alarmTimeButton.addTarget(self, action: #selector(alarmTimeButtonClicked), for: .touchUpInside)
     }
@@ -241,7 +263,7 @@ class NewPlanViewController: UIViewController {
         }
     }
     
-    @objc func alarmTimeButtonClicked() {
+    @objc func alarmTimeButtonClicked() { //시간 선택
         let vc = DateBottomSheetViewController()
         vc.modalPresentationStyle = .overFullScreen
         vc.dateType = .plan
@@ -251,6 +273,26 @@ class NewPlanViewController: UIViewController {
         }
         present(vc, animated: true)
     }
+    
+    @objc func dateButtonClicked() { //날짜 선택
+        let vc = CalendarBottomSheetViewController()
+        vc.modalPresentationStyle = .overFullScreen
+        vc.selectDate = { date in
+            if !date.isEmpty {
+                self.dateArray = date
+                print(self.dateArray)
+                if date.count > 1 {
+                    if let lastDate = date.last {
+                        self.dateButton.setTitle("\(date[0].changeDateFormat()) ~ \(lastDate.changeDateFormat())", for: .normal)
+                    }
+                } else {
+                    self.dateButton.setTitle("\(date[0].changeDateFormat())", for: .normal)
+                }
+            }
+        }
+        present(vc, animated: true)
+    }
+    
     
     @objc func rightButtonItemClicked() {
         
@@ -271,14 +313,50 @@ class NewPlanViewController: UIViewController {
             self.view.makeToast("알람 시간을 입력해주세요", duration: 2.0, position: .bottom, style: style)
             return
         }
-
+        
         if type == .new {
             repository.printLink()
-            let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.selectDate, alarm: alarmSwitch.isOn, time: self.nowTime)
-            repository.createItem(item)
+            if dateArray.count == 1 {
+                let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[0], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: nil)
+                repository.createItem(item)
+            } else {
+                for index in 0..<dateArray.count {
+                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: self.dateArray.last)
+                    repository.createItem(item)
+                }
+            }
             self.save = true
         } else {
-            repository.editItem(id: self.id, title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.selectDate, alarm: alarmSwitch.isOn, time: self.nowTime)
+            
+            let last: Date? = {
+                if self.dateArray.count == 1 {
+                    return nil
+                } else {
+                    return self.dateArray.last
+                }
+            }()
+            
+            let realm = try! Realm()
+            try! realm.write {
+                let predicate = NSPredicate(format: "registerDate == %@", self.registerDate as NSDate)
+                
+                let prePlan = repository.fetch().filter(predicate)
+                print("prePlan 출력")
+                print(prePlan)
+                realm.delete(prePlan)
+            }
+            
+            if last == nil {
+                repository.editItem(id: self.id, title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[0], alarm: alarmSwitch.isOn, time: self.nowTime, firstDate: self.dateArray[0], lastDate: nil)
+            } else {
+                
+                for index in 0..<dateArray.count {
+                    
+                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: last)
+                    repository.createItem(item)
+                }
+            }
+            
             self.save = true
             
         }
