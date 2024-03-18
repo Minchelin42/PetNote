@@ -10,6 +10,7 @@
 		3912459E2BA5B4E2005EDF39 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3912459D2BA5B4E2005EDF39 /* APIKey.swift */; };
 		391245A12BA5BB55005EDF39 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391245A02BA5BB55005EDF39 /* PlaceModel.swift */; };
 		391245A32BA5BF84005EDF39 /* PlaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391245A22BA5BF84005EDF39 /* PlaceAPI.swift */; };
+		391245A62BA5E89E005EDF39 /* PlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391245A52BA5E89E005EDF39 /* PlaceViewController.swift */; };
 		394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */; };
 		394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E42B9C0F60000AF69F /* CompleteButton.swift */; };
 		394054E72B9C1D5A000AF69F /* GenderBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */; };
@@ -65,6 +66,7 @@
 		3912459D2BA5B4E2005EDF39 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		391245A02BA5BB55005EDF39 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		391245A22BA5BF84005EDF39 /* PlaceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAPI.swift; sourceTree = "<group>"; };
+		391245A52BA5E89E005EDF39 /* PlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewController.swift; sourceTree = "<group>"; };
 		394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBottomSheetViewController.swift; sourceTree = "<group>"; };
 		394054E42B9C0F60000AF69F /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +141,14 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		391245A42BA5E87D005EDF39 /* Place */ = {
+			isa = PBXGroup;
+			children = (
+				391245A52BA5E89E005EDF39 /* PlaceViewController.swift */,
+			);
+			path = Place;
+			sourceTree = "<group>";
+		};
 		394054F52B9D76FB000AF69F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				3912459F2BA5BB44005EDF39 /* Network */,
+				391245A42BA5E87D005EDF39 /* Place */,
 				394054F52B9D76FB000AF69F /* Extension */,
 				396D2FF22B9BE7E300613BFE /* Realm */,
 				396D2FE72B9B5AD100613BFE /* Style */,
@@ -381,6 +392,7 @@
 				394054F72B9D772A000AF69F /* Observable.swift in Sources */,
 				396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */,
 				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
+				391245A62BA5E89E005EDF39 /* PlaceViewController.swift in Sources */,
 				396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */,
 				39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */,
 				39CFA7882BA0C0A20057827F /* PlanRepository.swift in Sources */,
