@@ -47,6 +47,8 @@
 		396D2FFB2B9BEB7000613BFE /* PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FFA2B9BEB7000613BFE /* PetRepository.swift */; };
 		396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FFD2B9BEDA000613BFE /* Realm */; };
 		396D30002B9BEDA000613BFE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FFF2B9BEDA000613BFE /* RealmSwift */; };
+		3991E1002BA8A4C8006DBBD0 /* PlaceTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3991E0FF2BA8A4C8006DBBD0 /* PlaceTable.swift */; };
+		3991E1022BA8A5ED006DBBD0 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3991E1012BA8A5ED006DBBD0 /* PlaceRepository.swift */; };
 		39C1D64E2B9F3EF100418B68 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64D2B9F3EF100418B68 /* PlanView.swift */; };
 		39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */; };
 		39CFA7762BA018450057827F /* NewPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7752BA018450057827F /* NewPlanViewController.swift */; };
@@ -98,6 +100,8 @@
 		396D2FF02B9B65FB00613BFE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		396D2FF32B9BE7F800613BFE /* PetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTable.swift; sourceTree = "<group>"; };
 		396D2FFA2B9BEB7000613BFE /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
+		3991E0FF2BA8A4C8006DBBD0 /* PlaceTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTable.swift; sourceTree = "<group>"; };
+		3991E1012BA8A5ED006DBBD0 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
 		39C1D64D2B9F3EF100418B68 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCollectionViewCell.swift; sourceTree = "<group>"; };
 		39CFA7752BA018450057827F /* NewPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlanViewController.swift; sourceTree = "<group>"; };
@@ -264,6 +268,8 @@
 				396D2FFA2B9BEB7000613BFE /* PetRepository.swift */,
 				39CFA7852BA0C0920057827F /* PlanTable.swift */,
 				39CFA7872BA0C0A20057827F /* PlanRepository.swift */,
+				3991E0FF2BA8A4C8006DBBD0 /* PlaceTable.swift */,
+				3991E1012BA8A5ED006DBBD0 /* PlaceRepository.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -387,6 +393,7 @@
 				396D2FEF2B9B65AC00613BFE /* BaseView.swift in Sources */,
 				396D2FC12B99839200613BFE /* ViewController.swift in Sources */,
 				391245A12BA5BB55005EDF39 /* PlaceModel.swift in Sources */,
+				3991E1002BA8A4C8006DBBD0 /* PlaceTable.swift in Sources */,
 				391245A32BA5BF84005EDF39 /* PlaceAPI.swift in Sources */,
 				396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */,
 				394054F72B9D772A000AF69F /* Observable.swift in Sources */,
@@ -405,6 +412,7 @@
 				39CFA7912BA411F90057827F /* CalendarBottomSheetViewController.swift in Sources */,
 				396D2FF42B9BE7F800613BFE /* PetTable.swift in Sources */,
 				39CFA7782BA01BE80057827F /* NewPlanLabel.swift in Sources */,
+				3991E1022BA8A5ED006DBBD0 /* PlaceRepository.swift in Sources */,
 				396D2FE92B9B5AE000613BFE /* Color.swift in Sources */,
 				39CFA7862BA0C0920057827F /* PlanTable.swift in Sources */,
 				396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */,

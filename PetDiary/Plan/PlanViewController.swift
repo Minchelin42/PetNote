@@ -21,6 +21,11 @@ class PlanViewController: UIViewController {
     let repository = PlanRepository()
     var list: Results<PlanTable>!
     
+    lazy var pet = {
+       let repository = PetRepository()
+        return repository.fetch()
+    }()
+    
     override func loadView() {
         self.view = mainView
     }
@@ -40,6 +45,8 @@ class PlanViewController: UIViewController {
         mainView.collectionView.dataSource = self
         mainView.collectionView.register(PlanCollectionViewCell.self, forCellWithReuseIdentifier: "Plan")
         
+        
+        mainView.dayLabel.text = "\(pet[0].name)와의 \(self.days(from: pet[0].meet, to: Date()))일 째 하루의 기록"
         mainView.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
 
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeEvent(_:)))
@@ -61,6 +68,14 @@ class PlanViewController: UIViewController {
         self.list = repository.fetch().filter(predicate)
         self.mainView.collectionView.reloadData()
         self.mainView.calendar.reloadData()
+    }
+    
+    func days(from date: Date, to target: Date) -> String {
+        let result = Calendar.current.dateComponents([.day], from: date, to: target).day! + 1
+        
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        return numberFormatter.string(for: result)!
     }
 
     @objc func plusButtonClicked() {
@@ -108,6 +123,8 @@ extension PlanViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         self.selectDate = date
+        print(self.days(from: pet[0].meet, to: date))
+        self.mainView.dayLabel.text = "\(pet[0].name)와의 \(self.days(from: pet[0].meet, to: date))일 째 하루의 기록"
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
@@ -133,6 +150,7 @@ extension PlanViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
         let predicate = NSPredicate(format: "date >= %@ && date < %@", start as NSDate, end as NSDate)
         
         self.list = repository.fetch().filter(predicate)
+
         self.mainView.collectionView.reloadData()
         
         return true

@@ -8,16 +8,23 @@
 import UIKit
 import SnapKit
 import MapKit
+import RealmSwift
 
 class PlaceViewController: UIViewController {
 
     let map = MKMapView()
-    let button = {
+    let searchButton = {
        let button = UIButton()
-        button.layer.cornerRadius = 15
-        button.backgroundColor = .red
+        button.layer.cornerRadius = 22
+        button.backgroundColor = Color.green
+        button.setTitle("현위치에서 검색하기", for: .normal)
+        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
         return button
-    }() //내위치 버튼으로 수정
+    }()
+
+    var arr: Items = Items(item: [])
+    
+    let repository = PlaceRepository()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,26 +32,74 @@ class PlaceViewController: UIViewController {
         configureHierarchy()
         configureLayout()
         configureView()
+        
+        getRange()
+    }
 
+    func loadPlaceData() {
+        
+        var arr: Items = Items(item: [])
+        
+        PlaceAPI.shared.callRequest { result, error in
+            arr = (result?.response.body.items)!
+            
+            for index in 0..<arr.item.count {
+                let item = arr.item[index]
+                
+                var inputPlace = PlaceTable(title: "", category1: "" , category2: "", information: "", tel: "", address: "", latitude: 0.0, longitude: 0.0)
+                
+                if let title = item["title"]!,
+                   let category1 = item["category1"]!,
+                   let category2 = item["category2"]!,
+                   let information = item["description"]!,
+                   let address = item["address"]!,
+                   let coordinate = item["coordinates"]!{
+
+                   inputPlace.title = title
+                    inputPlace.category1 = category1
+                    inputPlace.category2 = category2
+                    inputPlace.information = information
+                    inputPlace.address = address
+                    
+                    let coordinates = self.getLocation(coordinate)
+                    inputPlace.latitude = Double(coordinates[0])!
+                    inputPlace.longitude = Double(coordinates[1])!
+                } else {
+                    print("어떠한 정보가 누락되었음")
+                }
+                
+                if let tel = item["tel"]! {
+                    inputPlace.tel = tel
+                } else {
+                    print("tel 정보 없음")
+                }
+                
+                self.repository.createItem(inputPlace)
+ 
+            }
+        }
     }
     
-    func configureHierarchy() {
+    
+    private func configureHierarchy() {
         view.addSubview(map)
-        view.addSubview(button)
+        view.addSubview(searchButton)
     }
     
-    func configureLayout() {
+    private func configureLayout() {
         map.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        button.snp.makeConstraints { make in
-            make.size.equalTo(30)
-            make.trailing.bottom.equalToSuperview().inset(20)
+        searchButton.snp.makeConstraints { make in
+            make.width.equalTo(166)
+            make.height.equalTo(43)
+            make.bottom.equalToSuperview().inset(60)
+            make.centerX.equalToSuperview()
         }
     }
     
-    func configureView() {
+    private func configureView() {
         map.mapType = MKMapType.standard
         
         // 줌 가능 여부
@@ -59,50 +114,111 @@ class PlaceViewController: UIViewController {
         map.showsUserLocation = true
         
         map.delegate = self
-
-        button.addTarget(self, action: #selector(buttonclick), for: .touchUpInside)
-
-    }
-    
-    @objc func buttonclick() {
         
-        // 중심값(필수): 위, 경도
-        let center = CLLocationCoordinate2D(latitude: 37.27,
-                                            longitude: 127.43)
+//        buttonclick()
 
-        // 영역을 확대 및 축소를 한다. (값이 낮을수록 화면을 확대/높으면 축소)
+        let center = CLLocationCoordinate2D(latitude: 37.64454276,
+                                            longitude: 126.886336)
+
         let span = MKCoordinateSpan(latitudeDelta: 0.01,
                                     longitudeDelta: 0.01)
-
-        // center를 중심으로 span 영역만큼 확대/축소 해서 보여줌
-        let region = MKCoordinateRegion(center: center,
-                                        span: span)
+    
+        let region = MKCoordinateRegion(center: center, span: span)
         
         map.setRegion(region, animated: false)
-        createAnnotation()
-    }
-    
-    func createAnnotation() {
-        let annotation = CustomAnnotation(title: "Here",
-                                          coordinate: CLLocationCoordinate2D(latitude: 37.2719952,
-                                                                             longitude: 127.4348221))
-        
-        annotation.imageName = "MapPin"
-        
         
         map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
         
-        map.addAnnotation(annotation)
+
+        searchButton.addTarget(self, action: #selector(searchButtonclick), for: .touchUpInside)
+
     }
     
+    @objc func searchButtonclick() {
+        getRange()
+    }
     
-    func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
+    private func getRange() {
+        
+        let center = map.region.center
+        let span = map.region.span
+       
+        
+        let farSouth = CLLocation(latitude: center.latitude - span.latitudeDelta * 0.5, longitude: center.longitude)
+        let farNorth = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude)
+        let farEast = CLLocation(latitude: center.latitude, longitude: center.longitude + span.longitudeDelta * 0.5)
+        let farWest = CLLocation(latitude: center.latitude, longitude: center.longitude - span.longitudeDelta * 0.5)
+        
+        let minimumLatitude: Double = farSouth.coordinate.latitude as Double
+        let maximumLatitude: Double = farNorth.coordinate.latitude as Double
+        let minimumlongtitude: Double = farWest.coordinate.longitude as Double
+        let maximumLongitude: Double = farEast.coordinate.longitude as Double
+
+        let filterPlace = repository.fetch().where {
+                ($0.latitude >= minimumLatitude) && ($0.latitude <= maximumLatitude) && ($0.longitude >= minimumlongtitude) && ($0.longitude <= maximumLongitude)
+            }
+
+        let annotations = map.annotations
+        
+        map.removeAnnotations(annotations)
+        
+        for index in 0..<filterPlace.count {
+            let annotation = CustomAnnotation(title: filterPlace[index].title,
+                                              coordinate: CLLocationCoordinate2D(latitude: filterPlace[index].latitude,
+                                                                                 longitude: filterPlace[index].longitude))
+            
+            annotation.imageName = "MapPin"
+            map.addAnnotation(annotation)
+        }
+        
+
+    }
+    
+    private func getLocation(_ coordinates: String?) -> [String] {
+        //위도 경도 추출
+        if let coordinates = coordinates {
+            let arr = coordinates.split(separator: ", ")
+            print(arr)
+            
+            var letitude = String(arr[0].dropFirst())
+            var longitude = String(arr[1].dropFirst())
+            print(letitude, longitude)
+            return [letitude, longitude]
+        } else {
+            return ["0.0", "0.0"]
+        }
+    }
+
+    private func createRealmAnnotation() {
+        
+        var list = repository.fetch()
+
+        map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
+        
+        for index in 0..<list.count {
+            let annotation = CustomAnnotation(title: list[index].title,
+                                              coordinate: CLLocationCoordinate2D(latitude: list[index].latitude,
+                                                                                 longitude: list[index].longitude))
+            
+            annotation.imageName = "MapPin"
+            map.addAnnotation(annotation)
+        }
+    }
+    
+    private func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
         return map.dequeueReusableAnnotationView(withIdentifier: NSStringFromClass(CustomAnnotationView.self), for: annotation)
     }
     
 }
 
 extension PlaceViewController: MKMapViewDelegate {
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        if !animated {
+         getRange()
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
         
