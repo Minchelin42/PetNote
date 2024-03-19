@@ -21,8 +21,18 @@ struct Body: Decodable {
     let numOfRows, pageNo, totalCount: String
 }
 
+
 struct Items: Decodable {
-    let item: [[String: String?]]
+    let item: [AnimalPlace]
+}
+
+struct AnimalPlace: Decodable {
+    let title: String
+    let category1: String
+    let category2: String
+    let description: String
+    let address: String
+    let coordinates: String
 }
 
 struct Header: Decodable {

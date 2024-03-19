@@ -24,7 +24,6 @@ class PlaceAPI {
             switch response.result {
             case .success(let success):
                 completionHandler(success, nil)
-//                dump(success)
             case .failure(let failure):
                 completionHandler(nil, failure)
                 print(failure)

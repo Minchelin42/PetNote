@@ -19,11 +19,22 @@ final class PlaceRepository {
         return realm.objects(PlaceTable.self)
     }
     
+    func inputItem(_ items: [PlaceTable]) {
+        do {
+            try realm.write {
+                realm.add(items)
+                print("Place Array Register")
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
     func createItem(_ item: PlaceTable) {
         do {
             try realm.write {
                 realm.add(item)
-                print("Place Register")
+//                print("Place Register")
             }
         } catch {
             print(error)

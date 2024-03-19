@@ -17,65 +17,63 @@ class PlaceViewController: UIViewController {
        let button = UIButton()
         button.layer.cornerRadius = 22
         button.backgroundColor = Color.green
-        button.setTitle("현위치에서 검색하기", for: .normal)
+        button.setTitle("내위치로 이동", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
         return button
     }()
+    
+    let placeInfoView = PlaceInfoView()
+    
+    lazy var locationManager = CLLocationManager()
 
     var arr: Items = Items(item: [])
     
     let repository = PlaceRepository()
     
+    var userLocation: CLLocationCoordinate2D!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        repository.printLink()
+        repository.deleteAllItem()
 
         configureHierarchy()
         configureLayout()
         configureView()
-        
+
+        loadPlaceData()
         getRange()
     }
 
     func loadPlaceData() {
         
-        var arr: Items = Items(item: [])
-        
-        PlaceAPI.shared.callRequest { result, error in
-            arr = (result?.response.body.items)!
-            
-            for index in 0..<arr.item.count {
-                let item = arr.item[index]
-                
-                var inputPlace = PlaceTable(title: "", category1: "" , category2: "", information: "", tel: "", address: "", latitude: 0.0, longitude: 0.0)
-                
-                if let title = item["title"]!,
-                   let category1 = item["category1"]!,
-                   let category2 = item["category2"]!,
-                   let information = item["description"]!,
-                   let address = item["address"]!,
-                   let coordinate = item["coordinates"]!{
+        DispatchQueue.global().async {
+            var arr: Items = Items(item: [])
+            var inputData: [PlaceTable] = []
 
-                   inputPlace.title = title
-                    inputPlace.category1 = category1
-                    inputPlace.category2 = category2
-                    inputPlace.information = information
-                    inputPlace.address = address
+            print("여기 시작", Date.now)
+            PlaceAPI.shared.callRequest { result, error in
+                arr = (result?.response.body.items)!
+            
+                for index in 0..<arr.item.count {
+                    let item = arr.item[index]
+
+                    var inputPlace = PlaceTable(title: item.title, category1: item.category1, category2: item.category2, information: item.description, tel: "", address: item.address, latitude: 0.0, longitude: 0.0)
+                        
                     
-                    let coordinates = self.getLocation(coordinate)
-                    inputPlace.latitude = Double(coordinates[0])!
-                    inputPlace.longitude = Double(coordinates[1])!
-                } else {
-                    print("어떠한 정보가 누락되었음")
+                    let coordinates = self.getLocation(item.coordinates)
+                    inputPlace.latitude = coordinates[0]
+                    inputPlace.longitude = coordinates[1]
+                    
+                    if inputPlace.information.contains("반려동물 동반불가") { continue }
+                    
+                    inputData.append(inputPlace)
                 }
-                
-                if let tel = item["tel"]! {
-                    inputPlace.tel = tel
-                } else {
-                    print("tel 정보 없음")
-                }
-                
-                self.repository.createItem(inputPlace)
- 
+
+                print("여기 반복문 끝", Date.now)
+                self.repository.inputItem(inputData)
             }
         }
     }
@@ -84,6 +82,7 @@ class PlaceViewController: UIViewController {
     private func configureHierarchy() {
         view.addSubview(map)
         view.addSubview(searchButton)
+        view.addSubview(placeInfoView)
     }
     
     private func configureLayout() {
@@ -94,8 +93,14 @@ class PlaceViewController: UIViewController {
         searchButton.snp.makeConstraints { make in
             make.width.equalTo(166)
             make.height.equalTo(43)
-            make.bottom.equalToSuperview().inset(60)
+            make.top.equalTo(view.safeAreaLayoutGuide).inset(30)
             make.centerX.equalToSuperview()
+        }
+        
+        placeInfoView.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
+            make.horizontalEdges.equalToSuperview().inset(25)
+            make.height.equalTo(155)
         }
     }
     
@@ -114,27 +119,20 @@ class PlaceViewController: UIViewController {
         map.showsUserLocation = true
         
         map.delegate = self
-        
-//        buttonclick()
-
-        let center = CLLocationCoordinate2D(latitude: 37.64454276,
-                                            longitude: 126.886336)
-
-        let span = MKCoordinateSpan(latitudeDelta: 0.01,
-                                    longitudeDelta: 0.01)
-    
-        let region = MKCoordinateRegion(center: center, span: span)
-        
-        map.setRegion(region, animated: false)
+        locationManager.delegate = self
         
         map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
         
 
         searchButton.addTarget(self, action: #selector(searchButtonclick), for: .touchUpInside)
+        
+        placeInfoView.layer.cornerRadius = 20
+        placeInfoView.isHidden = true
 
     }
     
     @objc func searchButtonclick() {
+        setRegionAndAnnotation(self.userLocation)
         getRange()
     }
     
@@ -164,6 +162,8 @@ class PlaceViewController: UIViewController {
         
         for index in 0..<filterPlace.count {
             let annotation = CustomAnnotation(title: filterPlace[index].title,
+                                              address: filterPlace[index].address,
+                                              info: filterPlace[index].information,
                                               coordinate: CLLocationCoordinate2D(latitude: filterPlace[index].latitude,
                                                                                  longitude: filterPlace[index].longitude))
             
@@ -174,41 +174,118 @@ class PlaceViewController: UIViewController {
 
     }
     
-    private func getLocation(_ coordinates: String?) -> [String] {
+    private func getLocation(_ coordinates: String) -> [Double] {
         //위도 경도 추출
-        if let coordinates = coordinates {
+
             let arr = coordinates.split(separator: ", ")
-            print(arr)
             
-            var letitude = String(arr[0].dropFirst())
-            var longitude = String(arr[1].dropFirst())
-            print(letitude, longitude)
+            let letitude = String(arr[0].dropFirst())
+            let longitude = String(arr[1].dropFirst())
+        
+        if let letitude = Double(letitude), let longitude = Double(longitude) {
             return [letitude, longitude]
-        } else {
-            return ["0.0", "0.0"]
-        }
+        } else { return [0, 0] }
     }
 
-    private func createRealmAnnotation() {
-        
-        var list = repository.fetch()
-
-        map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
-        
-        for index in 0..<list.count {
-            let annotation = CustomAnnotation(title: list[index].title,
-                                              coordinate: CLLocationCoordinate2D(latitude: list[index].latitude,
-                                                                                 longitude: list[index].longitude))
-            
-            annotation.imageName = "MapPin"
-            map.addAnnotation(annotation)
-        }
-    }
+//    private func createRealmAnnotation() {
+//        
+//        var list = repository.fetch()
+//
+//        map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
+//        
+//        for index in 0..<list.count {
+//            let annotation = CustomAnnotation(title: list[index].title,
+//                                              coordinate: CLLocationCoordinate2D(latitude: list[index].latitude,
+//                                                                                 longitude: list[index].longitude))
+//            
+//            annotation.imageName = "MapPin"
+//            map.addAnnotation(annotation)
+//        }
+//    }
     
     private func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
         return map.dequeueReusableAnnotationView(withIdentifier: NSStringFromClass(CustomAnnotationView.self), for: annotation)
     }
     
+    private func setLocation(_ status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            print("사용자가 위치권한에 대한 설정을 안한 경우")
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            self.locationManager.requestWhenInUseAuthorization()
+        case .denied:
+            print("사용자가 위치 설정을 거부한 상태")
+            self.goToSetting()
+            setDefaultLocation()
+        case .restricted:
+            print("위치 서비스 활성화가 제한된 상태")
+            self.goToSetting()
+            setDefaultLocation()
+        case .authorizedWhenInUse:
+            print("앱을 사용중일 때 위치서비스 이용 허용함")
+            locationManager.startUpdatingLocation()
+            self.searchButton.isHidden = false
+        default:
+            print("default")
+        }
+    }
+    
+    private func goToSetting() {
+        let alert = UIAlertController(title: "위치 정보 이용", message: "설정 > 개인정보보호 > 위치 설정을 허용하시면 현위치 주변 정보가 검색 가능합니다", preferredStyle: .alert)
+                let setting = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+                    if let setting = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(setting)
+                    }
+                }
+                alert.addAction(setting)
+                present(alert, animated: true)
+    }
+    
+    func setRegionAndAnnotation(_ center: CLLocationCoordinate2D) {
+        
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 700, longitudinalMeters: 700)
+        map.setRegion(region, animated: true)
+    }
+    
+}
+
+extension PlaceViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(#function)
+        print(locations)
+        
+        if let coordinate = locations.last?.coordinate {
+            print(coordinate)
+            print(coordinate.latitude)
+            print(coordinate.longitude)
+            
+            self.userLocation = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
+            
+            setRegionAndAnnotation(self.userLocation)
+        }
+        
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("성공적으로 못가져옴")
+        setDefaultLocation()
+       
+    }
+    
+    func setDefaultLocation() {
+        self.userLocation = CLLocationCoordinate2D(latitude: 37.547913, longitude: 127.07461)
+        setRegionAndAnnotation(self.userLocation)
+        self.searchButton.isHidden = true
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        DispatchQueue.main.async {
+            print(#function)
+            let authStatus = manager.authorizationStatus
+            self.setLocation(authStatus)
+        }
+    }
 }
 
 extension PlaceViewController: MKMapViewDelegate {
@@ -216,6 +293,7 @@ extension PlaceViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         if !animated {
          getRange()
+         self.placeInfoView.isHidden = true
         }
     }
     
@@ -232,14 +310,21 @@ extension PlaceViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        let vc = DateBottomSheetViewController()
-        vc.modalPresentationStyle = .overFullScreen
-        vc.dateType = .plan
-        vc.selectTime = { time in
-            print(time)
-        }
-        present(vc, animated: true)
+        guard let title = view.annotation?.title,
+        let latitude = view.annotation?.coordinate.latitude,
+        let longitude = view.annotation?.coordinate.longitude else { return }
         
+        let selectPlace = repository.fetch().where {
+            $0.title == title ?? "" && $0.latitude == latitude && $0.longitude == longitude
+        }
+        
+        print(selectPlace[0])
+        
+        placeInfoView.titleLabel.text = selectPlace[0].title
+        placeInfoView.addressLabel.text = selectPlace[0].address
+        placeInfoView.infoLabel.text = selectPlace[0].information
+        
+        placeInfoView.isHidden = false
     }
 }
 
@@ -276,7 +361,7 @@ class CustomAnnotationView: MKAnnotationView {
     func configUI() {
         self.addSubview(customImageView)
         customImageView.snp.makeConstraints { make in
-            make.size.equalTo(25)
+            make.size.equalTo(30)
         }
     }
     
@@ -299,7 +384,7 @@ class CustomAnnotationView: MKAnnotationView {
 
     override func layoutSubviews() {
     super.layoutSubviews()
-        bounds.size = CGSize(width: 25, height: 25)
-        centerOffset = CGPoint(x: 0, y: 12.5)
+        bounds.size = CGSize(width: 30, height: 30)
+        centerOffset = CGPoint(x: 0, y: 15)
     }
 }
