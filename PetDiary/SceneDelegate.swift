@@ -14,10 +14,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
+        let repository = PetRepository()
+        
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-
-        let nav = UINavigationController(rootViewController: PlanViewController())
+        var nav = UINavigationController()
+        if repository.fetch().isEmpty {
+            nav = UINavigationController(rootViewController: ProfileViewController())
+        } else {
+            nav = UINavigationController(rootViewController: PetDiaryTabBarController())
+            
+        }
         
         window?.rootViewController = nav
         

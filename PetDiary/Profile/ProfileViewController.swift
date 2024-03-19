@@ -27,6 +27,10 @@ class ProfileViewController: UIViewController {
         
         view.addGestureRecognizer(tapGesture)
         
+        navigationItem.title = "반려동물 등록"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Color.darkGreen]
+        UINavigationBar.appearance().tintColor = Color.darkGreen
+        
         mainView.nameTextField.delegate = self
         mainView.weightTextField.delegate = self
         
@@ -138,6 +142,18 @@ class ProfileViewController: UIViewController {
             if let image = self.mainView.profileButton.currentImage {
                 saveImageToDocument(image: image, filename: "\(viewModel.name.value)")
             }
+            
+            sleep(2)
+            
+            let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            
+            let sceneDelegate = windowScene?.delegate as? SceneDelegate
+            
+            let nav = UINavigationController(rootViewController: PetDiaryTabBarController())
+
+            sceneDelegate?.window?.rootViewController = nav
+            sceneDelegate?.window?.makeKeyAndVisible()
+
         }
     }
     

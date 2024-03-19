@@ -34,8 +34,7 @@ class PlanViewController: UIViewController {
         super.viewDidLoad()
         
         self.list = repository.fetch()
-        
-        navigationController?.isNavigationBarHidden = true
+    
         view.backgroundColor = Color.background
  
         mainView.calendar.delegate = self
@@ -60,6 +59,7 @@ class PlanViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         let start = Calendar.current.startOfDay(for: mainView.calendar.selectedDate ?? Date())
         let end: Date = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? Date()
 
@@ -123,8 +123,8 @@ extension PlanViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalend
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         self.selectDate = date
-        print(self.days(from: pet[0].meet, to: date))
-        self.mainView.dayLabel.text = "\(pet[0].name)와의 \(self.days(from: pet[0].meet, to: date))일 째 하루의 기록"
+        guard let dayCount = Int(self.days(from: pet[0].meet, to: date)) else { return }
+        self.mainView.dayLabel.text = "\(pet[0].name)와의 \(dayCount)일 째 하루의 기록"
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillSelectionColorFor date: Date) -> UIColor? {
@@ -186,7 +186,6 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
             vc.id = self.list[indexPath.row].id
             vc.nowTitle = self.list[indexPath.row].title
             vc.nowMemo = self.list[indexPath.row].memo
-//            vc.selectDate = self.list[indexPath.row].date
             vc.isSwitchOn = self.list[indexPath.row].alarm
             vc.nowTime = self.list[indexPath.row].time
             vc.registerDate = self.list[indexPath.row].registerDate

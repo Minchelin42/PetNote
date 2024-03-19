@@ -16,6 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         IQKeyboardManager.shared.enable = true
         
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        
+        //바꾸고 싶은 색으로 backgroundColor를 설정
+        UITabBar.appearance().tintColor = Color.moreLightGreen
+        UITabBar.appearance().backgroundColor = Color.darkGreen
+        
         return true
     }
 

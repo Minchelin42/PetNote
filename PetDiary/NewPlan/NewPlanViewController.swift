@@ -98,7 +98,6 @@ class NewPlanViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         saveComplete?(self.type, self.save)
-        navigationController?.isNavigationBarHidden = true
     }
     
     func configureHierarchy() {

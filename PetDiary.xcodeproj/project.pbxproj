@@ -26,6 +26,8 @@
 		394054FD2B9DE331000AF69F /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */; };
 		394055002B9E0294000AF69F /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 394054FF2B9E0294000AF69F /* FSCalendar */; };
 		394055052B9EF681000AF69F /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394055042B9EF681000AF69F /* PlanViewController.swift */; };
+		3969582A2BA98EA30083E9EC /* PlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396958292BA98EA30083E9EC /* PlaceInfoView.swift */; };
+		3969582C2BA9CFD10083E9EC /* PetDiaryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3969582B2BA9CFD10083E9EC /* PetDiaryTabBarController.swift */; };
 		396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBC2B99839200613BFE /* AppDelegate.swift */; };
 		396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBE2B99839200613BFE /* SceneDelegate.swift */; };
 		396D2FC12B99839200613BFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FC02B99839200613BFE /* ViewController.swift */; };
@@ -80,6 +82,8 @@
 		394054FA2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraBottomSheetViewController.swift; sourceTree = "<group>"; };
 		394054FC2B9DE330000AF69F /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
 		394055042B9EF681000AF69F /* PlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
+		396958292BA98EA30083E9EC /* PlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoView.swift; sourceTree = "<group>"; };
+		3969582B2BA9CFD10083E9EC /* PetDiaryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDiaryTabBarController.swift; sourceTree = "<group>"; };
 		396D2FB92B99839200613BFE /* PetDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396D2FBC2B99839200613BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		396D2FBE2B99839200613BFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -212,6 +216,7 @@
 				396D2FC72B99839700613BFE /* LaunchScreen.storyboard */,
 				396D2FCA2B99839700613BFE /* Info.plist */,
 				394054F62B9D772A000AF69F /* Observable.swift */,
+				3969582B2BA9CFD10083E9EC /* PetDiaryTabBarController.swift */,
 			);
 			path = PetDiary;
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 				39CFA7772BA01BE80057827F /* NewPlanLabel.swift */,
 				39CFA77E2BA025680057827F /* NewPlanTextField.swift */,
 				39CFA7802BA037560057827F /* GreenLine.swift */,
+				396958292BA98EA30083E9EC /* PlaceInfoView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -399,6 +405,7 @@
 				394054F72B9D772A000AF69F /* Observable.swift in Sources */,
 				396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */,
 				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
+				3969582A2BA98EA30083E9EC /* PlaceInfoView.swift in Sources */,
 				391245A62BA5E89E005EDF39 /* PlaceViewController.swift in Sources */,
 				396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */,
 				39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */,
@@ -406,6 +413,7 @@
 				394055052B9EF681000AF69F /* PlanViewController.swift in Sources */,
 				396D2FFB2B9BEB7000613BFE /* PetRepository.swift in Sources */,
 				394054F42B9D76C9000AF69F /* ProfileViewModel.swift in Sources */,
+				3969582C2BA9CFD10083E9EC /* PetDiaryTabBarController.swift in Sources */,
 				394054FD2B9DE331000AF69F /* Extension + UIViewController.swift in Sources */,
 				396D2FDC2B9ADEA900613BFE /* CameraButton.swift in Sources */,
 				39CFA7932BA4246B0057827F /* FSCalendarCustomCell.swift in Sources */,

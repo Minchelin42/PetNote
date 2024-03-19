@@ -62,7 +62,7 @@ final class ProfileView: BaseView {
     override func configureLayout() {
         profileButton.snp.makeConstraints { make in
             make.centerX.equalTo(safeAreaLayoutGuide)
-            make.top.equalTo(safeAreaLayoutGuide).inset(50)
+            make.top.equalTo(safeAreaLayoutGuide).inset(30)
             make.size.equalTo(160)
         }
         
@@ -73,7 +73,7 @@ final class ProfileView: BaseView {
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileButton.snp.bottom).offset(40)
+            make.top.equalTo(profileButton.snp.bottom).offset(30)
             make.leading.equalTo(safeAreaLayoutGuide).inset(40)
         }
         
@@ -128,7 +128,7 @@ final class ProfileView: BaseView {
         }
         
         registerButton.snp.makeConstraints { make in
-            make.top.equalTo(weightTextField.snp.bottom).offset(45)
+            make.top.equalTo(weightTextField.snp.bottom).offset(35)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
             make.height.equalTo(inputHeight)
         }
