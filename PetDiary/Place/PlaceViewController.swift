@@ -10,6 +10,14 @@ import SnapKit
 import MapKit
 import RealmSwift
 
+enum Category {
+    static let shopping = "Goods"
+    static let medicine = "Medichine"
+    static let hospital = "Hospital"
+    static let beauty = "Beauty"
+    static let etc = "Etc"
+}
+
 class PlaceViewController: UIViewController {
 
     let map = MKMapView()
@@ -162,12 +170,24 @@ class PlaceViewController: UIViewController {
         
         for index in 0..<filterPlace.count {
             let annotation = CustomAnnotation(title: filterPlace[index].title,
-                                              address: filterPlace[index].address,
-                                              info: filterPlace[index].information,
                                               coordinate: CLLocationCoordinate2D(latitude: filterPlace[index].latitude,
                                                                                  longitude: filterPlace[index].longitude))
             
-            annotation.imageName = "MapPin"
+            let category = filterPlace[index].category2
+            
+            switch category {
+            case "동물병원" : 
+                annotation.imageName = Category.hospital
+            case "동물약국" :  
+                annotation.imageName = Category.medicine
+            case "미용" :  
+                annotation.imageName = Category.beauty
+            case "반려동물용품" :  
+                annotation.imageName = Category.shopping
+            default:  
+                annotation.imageName = Category.etc
+            }
+            
             map.addAnnotation(annotation)
         }
         
@@ -186,22 +206,6 @@ class PlaceViewController: UIViewController {
             return [letitude, longitude]
         } else { return [0, 0] }
     }
-
-//    private func createRealmAnnotation() {
-//        
-//        var list = repository.fetch()
-//
-//        map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
-//        
-//        for index in 0..<list.count {
-//            let annotation = CustomAnnotation(title: list[index].title,
-//                                              coordinate: CLLocationCoordinate2D(latitude: list[index].latitude,
-//                                                                                 longitude: list[index].longitude))
-//            
-//            annotation.imageName = "MapPin"
-//            map.addAnnotation(annotation)
-//        }
-//    }
     
     private func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
         return map.dequeueReusableAnnotationView(withIdentifier: NSStringFromClass(CustomAnnotationView.self), for: annotation)
