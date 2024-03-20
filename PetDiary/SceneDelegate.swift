@@ -26,6 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
         }
         
+//        nav = UINavigationController(rootViewController: ProfileViewController())
+        
         window?.rootViewController = nav
         
         window?.makeKeyAndVisible()

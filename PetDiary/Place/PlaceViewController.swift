@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import MapKit
 import RealmSwift
+import Toast
 
 enum Category {
     static let shopping = "Goods"
@@ -45,13 +46,15 @@ class PlaceViewController: UIViewController {
         super.viewDidLoad()
         
         repository.printLink()
-        repository.deleteAllItem()
 
         configureHierarchy()
         configureLayout()
         configureView()
-
-        loadPlaceData()
+        
+        if repository.fetch().isEmpty {
+            loadPlaceData()
+        }
+        
         getRange()
     }
 
@@ -62,13 +65,25 @@ class PlaceViewController: UIViewController {
             var inputData: [PlaceTable] = []
 
             print("여기 시작", Date.now)
-            PlaceAPI.shared.callRequest { result, error in
+            PlaceAPI.shared.callRequest { status, result, error in
+
+                guard let status = status else {
+                    print("네트워크 통신 오류")
+                    var style = ToastStyle()
+                    style.backgroundColor = Color.lightGreen!
+                    style.messageColor = .white
+                    style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+                    style.messageAlignment = .center
+                    self.view.makeToast("장소 불러오기를 실패하였습니다\n다음에 다시 시도해주세요", duration: 10.0, position: .bottom, style: style)
+                    return
+                }
+                
                 arr = (result?.response.body.items)!
             
                 for index in 0..<arr.item.count {
                     let item = arr.item[index]
 
-                    var inputPlace = PlaceTable(title: item.title, category1: item.category1, category2: item.category2, information: item.description, tel: "", address: item.address, latitude: 0.0, longitude: 0.0)
+                    let inputPlace = PlaceTable(title: item.title, category1: item.category1, category2: item.category2, information: item.description, tel: "", address: item.address, latitude: 0.0, longitude: 0.0)
                         
                     
                     let coordinates = self.getLocation(item.coordinates)
@@ -81,7 +96,14 @@ class PlaceViewController: UIViewController {
                 }
 
                 print("여기 반복문 끝", Date.now)
+
                 self.repository.inputItem(inputData)
+                
+                var style = ToastStyle()
+                style.backgroundColor = Color.lightGreen!
+                style.messageColor = .white
+                style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+                self.view.makeToast("장소 업데이트가 완료되었습니다", duration: 2.0, position: .bottom, style: style)
             }
         }
     }
@@ -189,6 +211,8 @@ class PlaceViewController: UIViewController {
             }
             
             map.addAnnotation(annotation)
+            
+            if index > 30 { return }
         }
         
 
@@ -288,6 +312,7 @@ extension PlaceViewController: CLLocationManagerDelegate {
             print(#function)
             let authStatus = manager.authorizationStatus
             self.setLocation(authStatus)
+            self.getRange()
         }
     }
 }
@@ -314,9 +339,17 @@ extension PlaceViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
         guard let title = view.annotation?.title,
         let latitude = view.annotation?.coordinate.latitude,
         let longitude = view.annotation?.coordinate.longitude else { return }
+        
+        if latitude == self.userLocation.latitude && longitude == self.userLocation.longitude {
+            
+            print("User Annotation")
+            return
+            
+        }
         
         let selectPlace = repository.fetch().where {
             $0.title == title ?? "" && $0.latitude == latitude && $0.longitude == longitude

@@ -44,7 +44,8 @@ final class PlaceRepository {
     func deleteAllItem() {
         do {
             try realm.write {
-                realm.deleteAll()
+                let allPlace = realm.objects(PlaceTable.self)
+                realm.delete(allPlace)
             }
         } catch {
             print(error)

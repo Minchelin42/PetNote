@@ -143,7 +143,7 @@ class ProfileViewController: UIViewController {
                 saveImageToDocument(image: image, filename: "\(viewModel.name.value)")
             }
             
-            sleep(2)
+            sleep(1)
             
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
             

@@ -56,12 +56,12 @@ class PlaceInfoView: UIView {
         addressLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(30)
             make.height.equalTo(20)
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
         }
         
         infoLabel.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(30)
-            make.top.equalTo(addressLabel.snp.bottom).offset(8)
+            make.top.equalTo(addressLabel.snp.bottom).offset(4)
             make.bottom.lessThanOrEqualTo(-20)
         }
     }

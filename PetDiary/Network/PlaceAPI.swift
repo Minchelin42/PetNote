@@ -18,14 +18,14 @@ class PlaceAPI {
         "Accept": "application/json"
     ]
     
-    func callRequest(completionHandler: @escaping((Place?, AFError?) -> Void)) {
+    func callRequest(completionHandler: @escaping((Int?, Place?, AFError?) -> Void)) {
         AF.request(url, method: .get, headers: headers).responseDecodable(of: Place.self) { response in
             
             switch response.result {
             case .success(let success):
-                completionHandler(success, nil)
+                completionHandler(response.response?.statusCode, success, nil)
             case .failure(let failure):
-                completionHandler(nil, failure)
+                completionHandler(nil, nil, failure)
                 print(failure)
             }
         }
