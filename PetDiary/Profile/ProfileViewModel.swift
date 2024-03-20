@@ -11,7 +11,7 @@ class ProfileViewModel {
     
     let repository = PetRepository()
     // 이름, 성별, 처음 만난 날, 태어난 날, 몸무게
-    var name: Observable<String?> = Observable(nil)
+    var name = Observable("")
     var gender: Observable<Bool?> = Observable(nil)
     var firstMeet: Observable<Date?> = Observable(nil)
     var birth: Observable<Date?> = Observable(nil)
@@ -19,6 +19,8 @@ class ProfileViewModel {
     
     var checkInputData = Observable(false)
     var registerButtonClicked: Observable<Void?> = Observable(nil)
+    var checkDuplicate = Observable(false)
+    var checkDate = Observable(false)
     
     init() {
         registerButtonClicked.bind { _ in
@@ -26,10 +28,29 @@ class ProfileViewModel {
         }
     }
     
+    func compareDate() {
+        guard let birth = self.birth.value,
+              let firstMeet = self.firstMeet.value else { return }
+        
+        switch birth.compare(firstMeet) {
+        //동일한 날짜
+        case .orderedSame: self.checkDate.value = false
+        //생일보다 처음 만난 날이 더 빠름 -> x
+        case .orderedDescending: self.checkDate.value = true
+        //생일 이후에 만남
+        case .orderedAscending: self.checkDate.value = false
+        default: self.checkDate.value = false
+        }
+    }
+    
     func checkInputDataStatus() {
         print("checkInputDataStatus")
-        if let _ = name.value, let _ = gender.value, let _ = firstMeet.value, let _ = birth.value, let _ = weight.value {
-            self.checkInputData.value = true
+        if let _ = gender.value, let _ = firstMeet.value, let _ = birth.value, let _ = weight.value {
+            if name.value.isEmpty {
+                self.checkInputData.value = false
+            } else {
+                self.checkInputData.value = true
+            }
             print("지금 상태 체크 \(self.checkInputData.value)")
         } else {
             self.checkInputData.value = false
@@ -38,7 +59,7 @@ class ProfileViewModel {
     }
     
     private func appendNewPet() {
-        guard self.name.value != nil,
+        guard self.name.value != "",
               self.gender.value != nil,
               self.firstMeet.value != nil,
               self.birth.value != nil,
@@ -47,10 +68,29 @@ class ProfileViewModel {
             print("입력된 정보가 부족합니다")
             return }
         
-        let item = PetTable(name: self.name.value!, gender: self.gender.value!, birth: self.birth.value!, meet: self.firstMeet.value!, weight: self.weight.value!)
+        let item = PetTable(name: self.name.value, gender: self.gender.value!, birth: self.birth.value!, meet: self.firstMeet.value!, weight: self.weight.value!)
         
-        repository.createItem(item)
+        if !self.checkDate.value {
+            repository.createItem(item)
+        }
         
+    }
+    
+    func duplicateTest() {
+        
+        let petName = self.name.value
+        
+        let pet = repository.fetch().where {
+            $0.name.equals(petName)
+        }
+
+        if pet.isEmpty {
+            self.checkDuplicate.value = false
+        } else {
+            //중복
+            self.checkDuplicate.value = true
+        }
+
     }
     
 }

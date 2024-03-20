@@ -25,9 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             nav = UINavigationController(rootViewController: PetDiaryTabBarController())
             
         }
-        
-//        nav = UINavigationController(rootViewController: ProfileViewController())
-        
+
         window?.rootViewController = nav
         
         window?.makeKeyAndVisible()

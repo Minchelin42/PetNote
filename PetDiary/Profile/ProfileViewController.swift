@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Toast
 
 class ProfileViewController: UIViewController {
 
@@ -48,10 +49,9 @@ class ProfileViewController: UIViewController {
         mainView.weightTextField.addDoneButton(doneAction: #selector(inputWeight))
         
         viewModel.name.bind { name in
-            if let name {
-                self.mainView.nameTextField.text = name
-            }
+            self.mainView.nameTextField.text = name
             self.viewModel.checkInputDataStatus()
+            self.viewModel.duplicateTest()
         }
         
         viewModel.gender.bind { gender in
@@ -92,6 +92,19 @@ class ProfileViewController: UIViewController {
                 self.mainView.registerButton.backgroundColor = Color.darkGray
             }
         }
+        
+        viewModel.checkDuplicate.bind { value in
+            if value { //중복인 경우
+                var style = ToastStyle()
+                style.backgroundColor = Color.lightGreen!
+                style.messageColor = .white
+                style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+                self.view.makeToast("동일한 이름의 반려동물이 존재합니다", duration: 2.0, position: .bottom, style: style)
+                
+                self.viewModel.name.value = ""
+                self.mainView.nameTextField.text = ""
+            }
+        }
 
     }
     
@@ -124,6 +137,7 @@ class ProfileViewController: UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         vc.dateType = sender.datetype!
         vc.selectDate = { date in
+            guard let date = date else { return }
             if sender.datetype! == .birth {
                 self.viewModel.birth.value = date
             } else {
@@ -137,12 +151,28 @@ class ProfileViewController: UIViewController {
         print(#function)
         viewModel.repository.printLink()
         print(viewModel.name.value, viewModel.birth.value, viewModel.firstMeet.value, viewModel.gender.value, viewModel.weight.value)
+        
+        viewModel.compareDate()
+        
+        if self.viewModel.checkDate.value { //생일보다 처음 만난 날이 먼저일 경우
+            var style = ToastStyle()
+            style.backgroundColor = Color.lightGreen!
+            style.messageColor = .white
+            style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+            self.view.makeToast("처음 만난 날보다 생일이 이른 날짜여야합니다", duration: 2.0, position: .bottom, style: style)
+            
+            self.viewModel.checkInputData.value = false
+            
+            return
+        }
+        
         viewModel.registerButtonClicked.value = ()
+        
         if self.viewModel.checkInputData.value {
             if let image = self.mainView.profileButton.currentImage {
                 saveImageToDocument(image: image, filename: "\(viewModel.name.value)")
             }
-            
+
             sleep(1)
             
             let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
@@ -172,7 +202,7 @@ class ProfileViewController: UIViewController {
             self.viewModel.name.value = name
             mainView.nameTextField.resignFirstResponder()
         } else {
-            self.viewModel.name.value = nil
+            self.viewModel.name.value = ""
             mainView.nameTextField.resignFirstResponder()
         }
     }
