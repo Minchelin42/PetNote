@@ -42,6 +42,18 @@ final class PlanRepository {
         }
     }
     
+    func changeStatus(id: ObjectId?, clear: Bool) {
+        do {
+            try realm.write {
+                realm.create(PlanTable.self,
+                             value: ["id": id, "clear": clear],
+                             update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
     func deleteItem(_ item: PlanTable) {
         do{
             try realm.write {

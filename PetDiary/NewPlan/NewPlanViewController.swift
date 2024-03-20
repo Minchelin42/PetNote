@@ -67,7 +67,7 @@ class NewPlanViewController: UIViewController {
     var dateArray: [Date] = []
     
     var save: Bool = false
-    var saveComplete: ((PlanType, Bool) -> Void)?
+    var saveComplete: ((PlanType, Bool, Date) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +97,7 @@ class NewPlanViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        saveComplete?(self.type, self.save)
+        saveComplete?(self.type, self.save, self.dateArray[0])
     }
     
     func configureHierarchy() {

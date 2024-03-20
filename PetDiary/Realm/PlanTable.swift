@@ -18,6 +18,7 @@ final class PlanTable: Object {
     @Persisted var registerDate: Date
     @Persisted var firstDate: Date
     @Persisted var lastDate: Date?
+    @Persisted var clear: Bool
     
     convenience init(title: String, memo: String, date: Date, alarm: Bool, time: Date?, registerDate: Date, firstDate: Date, lastDate: Date?) {
         self.init()
@@ -29,5 +30,6 @@ final class PlanTable: Object {
         self.registerDate = registerDate
         self.firstDate = firstDate
         self.lastDate = lastDate
+        self.clear = false
     }
 }

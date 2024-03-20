@@ -127,6 +127,7 @@ class PlanCollectionViewCell: SwipeCollectionViewCell {
         clearButton.layer.cornerRadius = 10
         clearButton.layer.borderWidth = 1.2
         clearButton.layer.borderColor = Color.darkGreen?.cgColor
+        
     }
     
     

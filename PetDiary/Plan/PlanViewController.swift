@@ -81,7 +81,7 @@ class PlanViewController: UIViewController {
     @objc func plusButtonClicked() {
         let vc = NewPlanViewController()
         vc.firstDate = self.selectDate
-        vc.saveComplete = { type, save in
+        vc.saveComplete = { type, save, date in
             print(type)
             if save && type == .new {
                 var style = ToastStyle()
@@ -90,6 +90,7 @@ class PlanViewController: UIViewController {
                 style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
                 self.view.makeToast("새로운 할 일이 추가되었습니다", duration: 2.0, position: .bottom, style: style)
             }
+            self.mainView.calendar.select(date, scrollToDate: true)
         }
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -105,6 +106,20 @@ class PlanViewController: UIViewController {
         
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc func clearButtonClicked(_ sender: UIButton) {
+        sender.isSelected.toggle()
+        
+        let item = list[sender.tag]
+        
+        if sender.isSelected {
+            sender.setImage(UIImage(named:"check"), for: .normal)
+            repository.changeStatus(id: item.id, clear: sender.isSelected)
+        } else {
+            sender.setImage(nil, for: .normal)
+            repository.changeStatus(id: item.id, clear: sender.isSelected)
         }
     }
 
@@ -172,6 +187,15 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
         cell.memoLabel.text = item.memo
         cell.alarmLabel.text = item.alarm ? item.time?.changeDateToTime() : "알람 없음"
         
+        if item.clear {
+            cell.clearButton.setImage(UIImage(named: "check"), for: .normal)
+            cell.clearButton.isSelected = item.clear
+        }
+        
+        cell.clearButton.tag = indexPath.row
+        
+        cell.clearButton.addTarget(self, action: #selector(clearButtonClicked), for: .touchUpInside)
+        
         return cell
     }
     
@@ -192,7 +216,7 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
             vc.firstDate = self.list[indexPath.row].firstDate
             vc.lastDate = self.list[indexPath.row].lastDate
             
-            vc.saveComplete = { type, save in
+            vc.saveComplete = { type, save, date in
                 if save && type == .edit {
                     var style = ToastStyle()
                     style.backgroundColor = Color.lightGreen!
@@ -200,6 +224,8 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
                     style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
                     self.view.makeToast("할 일이 수정되었습니다", duration: 2.0, position: .bottom, style: style)
                 }
+                
+                self.mainView.calendar.select(date, scrollToDate: true)
             }
 
             self.navigationController?.pushViewController(vc, animated: true)
