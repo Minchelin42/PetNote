@@ -16,24 +16,23 @@ class PetDiaryTabBarController: UITabBarController {
 
         let planVC = PlanViewController()
         let placeVC = PlaceViewController()
+        let settingVC = SettingViewController()
 
         planVC.tabBarItem.image = UIImage.init(named: "tab_plan_inactive")?.withRenderingMode(.alwaysOriginal)
         placeVC.tabBarItem.image = UIImage.init(named: "tab_map_inactive")?.withRenderingMode(.alwaysOriginal)
+        settingVC.tabBarItem.image = UIImage.init(named: "tab_setting_inactive")?.withRenderingMode(.alwaysOriginal)
 
         planVC.tabBarItem.selectedImage = UIImage.init(named: "tab_plan")?.withRenderingMode(.alwaysOriginal)
         placeVC.tabBarItem.selectedImage = UIImage.init(named: "tab_map")?.withRenderingMode(.alwaysOriginal)
+        settingVC.tabBarItem.selectedImage = UIImage.init(named: "tab_setting")?.withRenderingMode(.alwaysOriginal)
         
         planVC.tabBarItem.title = "Record"
         placeVC.tabBarItem.title = "Map"
+        settingVC.tabBarItem.title = "My Page"
 
+        let navSetting = UINavigationController(rootViewController: settingVC)
         
-        planVC.navigationItem.largeTitleDisplayMode = .always
-        placeVC.navigationItem.largeTitleDisplayMode = .always
-        
-        let navPlan = UINavigationController(rootViewController: planVC)
-        let navPlace = UINavigationController(rootViewController: placeVC)
-        
-        setViewControllers([planVC, placeVC], animated: false)
+        setViewControllers([planVC, placeVC, navSetting], animated: false)
 
     }
     

@@ -28,6 +28,9 @@
 		394055052B9EF681000AF69F /* PlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394055042B9EF681000AF69F /* PlanViewController.swift */; };
 		3969582A2BA98EA30083E9EC /* PlaceInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396958292BA98EA30083E9EC /* PlaceInfoView.swift */; };
 		3969582C2BA9CFD10083E9EC /* PetDiaryTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3969582B2BA9CFD10083E9EC /* PetDiaryTabBarController.swift */; };
+		396958302BAC04CD0083E9EC /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3969582F2BAC04CD0083E9EC /* SettingViewController.swift */; };
+		396958322BAC10910083E9EC /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396958312BAC10910083E9EC /* ProfileInfoView.swift */; };
+		396958352BAC38EC0083E9EC /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396958342BAC38EC0083E9EC /* UserDefaultManager.swift */; };
 		396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBC2B99839200613BFE /* AppDelegate.swift */; };
 		396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FBE2B99839200613BFE /* SceneDelegate.swift */; };
 		396D2FC12B99839200613BFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FC02B99839200613BFE /* ViewController.swift */; };
@@ -84,6 +87,9 @@
 		394055042B9EF681000AF69F /* PlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanViewController.swift; sourceTree = "<group>"; };
 		396958292BA98EA30083E9EC /* PlaceInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoView.swift; sourceTree = "<group>"; };
 		3969582B2BA9CFD10083E9EC /* PetDiaryTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDiaryTabBarController.swift; sourceTree = "<group>"; };
+		3969582F2BAC04CD0083E9EC /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		396958312BAC10910083E9EC /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
+		396958342BAC38EC0083E9EC /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 		396D2FB92B99839200613BFE /* PetDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396D2FBC2B99839200613BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		396D2FBE2B99839200613BFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -178,6 +184,14 @@
 			path = Plan;
 			sourceTree = "<group>";
 		};
+		3969582E2BAC04B60083E9EC /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				3969582F2BAC04CD0083E9EC /* SettingViewController.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		396D2FB02B99839200613BFE = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +212,7 @@
 		396D2FBB2B99839200613BFE /* PetDiary */ = {
 			isa = PBXGroup;
 			children = (
+				3969582E2BAC04B60083E9EC /* Setting */,
 				3912459F2BA5BB44005EDF39 /* Network */,
 				391245A42BA5E87D005EDF39 /* Place */,
 				394054F52B9D76FB000AF69F /* Extension */,
@@ -217,6 +232,7 @@
 				396D2FCA2B99839700613BFE /* Info.plist */,
 				394054F62B9D772A000AF69F /* Observable.swift */,
 				3969582B2BA9CFD10083E9EC /* PetDiaryTabBarController.swift */,
+				396958342BAC38EC0083E9EC /* UserDefaultManager.swift */,
 			);
 			path = PetDiary;
 			sourceTree = "<group>";
@@ -255,6 +271,7 @@
 				39CFA77E2BA025680057827F /* NewPlanTextField.swift */,
 				39CFA7802BA037560057827F /* GreenLine.swift */,
 				396958292BA98EA30083E9EC /* PlaceInfoView.swift */,
+				396958312BAC10910083E9EC /* ProfileInfoView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -385,6 +402,7 @@
 			files = (
 				396D2FE32B9AE5C100613BFE /* ProfileInputTextField.swift in Sources */,
 				394054FB2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift in Sources */,
+				396958352BAC38EC0083E9EC /* UserDefaultManager.swift in Sources */,
 				394054F92B9DB058000AF69F /* Extension + Date.swift in Sources */,
 				39CFA77F2BA025680057827F /* NewPlanTextField.swift in Sources */,
 				394054E92B9C1F8B000AF69F /* Extension + UIButton.swift in Sources */,
@@ -406,6 +424,7 @@
 				396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */,
 				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
 				3969582A2BA98EA30083E9EC /* PlaceInfoView.swift in Sources */,
+				396958302BAC04CD0083E9EC /* SettingViewController.swift in Sources */,
 				391245A62BA5E89E005EDF39 /* PlaceViewController.swift in Sources */,
 				396D2FD42B998AA100613BFE /* ProfileViewController.swift in Sources */,
 				39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */,
@@ -419,6 +438,7 @@
 				39CFA7932BA4246B0057827F /* FSCalendarCustomCell.swift in Sources */,
 				39CFA7912BA411F90057827F /* CalendarBottomSheetViewController.swift in Sources */,
 				396D2FF42B9BE7F800613BFE /* PetTable.swift in Sources */,
+				396958322BAC10910083E9EC /* ProfileInfoView.swift in Sources */,
 				39CFA7782BA01BE80057827F /* NewPlanLabel.swift in Sources */,
 				3991E1022BA8A5ED006DBBD0 /* PlaceRepository.swift in Sources */,
 				396D2FE92B9B5AE000613BFE /* Color.swift in Sources */,
@@ -503,7 +523,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -560,7 +580,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -592,9 +612,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mje0211.PetDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -620,9 +644,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.mje0211.PetDiary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
