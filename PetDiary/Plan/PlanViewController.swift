@@ -12,7 +12,15 @@ import RealmSwift
 import Toast
 import SwipeCellKit
 
+class Notification {
+    let notification = UNUserNotificationCenter.current()
+}
+
 class PlanViewController: UIViewController {
+    
+    let petName = UserDefaultManager.shared.nowPet
+    
+    let notification = Notification().notification
     
     let mainView = PlanView()
     
@@ -23,7 +31,9 @@ class PlanViewController: UIViewController {
     
     lazy var pet = {
        let repository = PetRepository()
-        return repository.fetch()
+        return repository.fetch().where {
+            $0.name == petName
+        }
     }()
     
     override func loadView() {
@@ -234,15 +244,33 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
             return
         }
         
-        let delete = SwipeAction(style: .default, title: "Delete") { action, indexPath in
+        let delete = SwipeAction(style: .default, title: "Delete") { [self] action, indexPath in
             
             print("delete 클릭")
+            
+            print("====삭제 전====")
+            notification.getPendingNotificationRequests(completionHandler: { requests in
+                for request in requests {
+                    print(request.trigger)
+                }
+            })
             
             let realm = try! Realm()
             try! realm.write {
                 let predicate = NSPredicate(format: "registerDate == %@", self.list[indexPath.row].registerDate as NSDate)
 
                 let prePlan = realm.objects(PlanTable.self).filter(predicate)
+                
+                for index in 0..<prePlan.count {
+                    notification.removePendingNotificationRequests(withIdentifiers: ["\(prePlan[index].registerDate) + \(prePlan[index].date)"])
+                }
+                
+                notification.getPendingNotificationRequests(completionHandler: { requests in
+                    for request in requests {
+                        print("====삭제 후====")
+                        print(request.trigger)
+                    }
+                })
                 
                 realm.delete(prePlan)
             }
@@ -271,6 +299,37 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
         delete.transitionDelegate = ScaleTransition.default
 
         return [edit, delete]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = NewPlanViewController()
+        vc.type = .edit
+        
+        vc.id = self.list[indexPath.row].id
+        vc.nowTitle = self.list[indexPath.row].title
+        vc.nowMemo = self.list[indexPath.row].memo
+        vc.isSwitchOn = self.list[indexPath.row].alarm
+        vc.nowTime = self.list[indexPath.row].time
+        vc.registerDate = self.list[indexPath.row].registerDate
+        vc.firstDate = self.list[indexPath.row].firstDate
+        vc.lastDate = self.list[indexPath.row].lastDate
+        
+        vc.saveComplete = { type, save, date in
+            if save && type == .edit {
+                var style = ToastStyle()
+                style.backgroundColor = Color.lightGreen!
+                style.messageColor = .white
+                style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+                self.view.makeToast("할 일이 수정되었습니다", duration: 2.0, position: .bottom, style: style)
+            }
+            
+            self.mainView.calendar.select(date, scrollToDate: true)
+        }
+
+        self.navigationController?.pushViewController(vc, animated: true)
+        print("edit 클릭")
+        
+        return
     }
     
     
@@ -321,6 +380,3 @@ extension UIImage {
 }
 
 
-#Preview {
-    PlanViewController()
-}

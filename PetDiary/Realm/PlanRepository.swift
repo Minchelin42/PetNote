@@ -64,6 +64,17 @@ final class PlanRepository {
         }
     }
     
+    func deleteAllItem() {
+        do {
+            try realm.write {
+                let allPlan = realm.objects(PlanTable.self)
+                realm.delete(allPlan)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
 }
 
 

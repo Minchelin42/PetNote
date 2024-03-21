@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import RealmSwift
 import Toast
-import RealmSwift
+import UserNotifications
 
 enum PlanType {
     case new
@@ -17,6 +17,10 @@ enum PlanType {
 }
 
 class NewPlanViewController: UIViewController {
+    
+    let notification = Notification().notification
+    
+    let pet = PetRepository().fetch().first?.name ?? ""
     
     let repository = PlanRepository()
     
@@ -218,7 +222,11 @@ class NewPlanViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(rightButtonItemClicked))
         
-        navigationItem.title = "할 일 추가"
+        if type == .new {
+            navigationItem.title = "할 일 추가"
+        } else {
+            navigationItem.title = "할 일 수정"
+        }
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Color.darkGreen]
         UINavigationBar.appearance().tintColor = Color.darkGreen
         
@@ -316,14 +324,27 @@ class NewPlanViewController: UIViewController {
         if type == .new {
             repository.printLink()
             if dateArray.count == 1 {
-                let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[0], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: nil)
+                let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[0], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: nil, pet: self.pet)
                 repository.createItem(item)
+                
+                if alarmSwitch.isOn {
+                    if let time = self.nowTime {
+                        pushReservedNotification(title: "오늘의 할 일", body: "루비(이)와 산책하기", date: self.dateArray[0], time: time, identifier: "\(self.registerDate) + \(self.dateArray[0])")
+                    }
+                }
             } else {
                 for index in 0..<dateArray.count {
-                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: self.dateArray.last)
+                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: self.dateArray.last, pet: self.pet)
                     repository.createItem(item)
+                    
+                    if alarmSwitch.isOn {
+                        if let time = self.nowTime {
+                            pushReservedNotification(title: "테스트", body: "테스트입니다", date: self.dateArray[index], time: time, identifier: "\(self.registerDate) + \(self.dateArray[index])")
+                        }
+                    }
                 }
             }
+            
             self.save = true
         } else {
             
@@ -342,34 +363,99 @@ class NewPlanViewController: UIViewController {
                 let prePlan = repository.fetch().filter(predicate)
                 print("prePlan 출력")
                 print(prePlan)
+                
+                for index in 0..<prePlan.count {
+                    notification.removePendingNotificationRequests(withIdentifiers: ["\(prePlan[index].registerDate) + \(prePlan[index].date)"])
+                }
+                
                 realm.delete(prePlan)
             }
             
+
+            
             if last == nil {
                 repository.editItem(id: self.id, title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[0], alarm: alarmSwitch.isOn, time: self.nowTime, firstDate: self.dateArray[0], lastDate: nil)
+                
+                if alarmSwitch.isOn {
+                    if let time = self.nowTime {
+                        pushReservedNotification(title: "테스트", body: "테스트입니다", date: self.dateArray[0], time: time, identifier: "\(self.registerDate) + \(self.dateArray[0])")
+                    }
+                }
             } else {
                 
                 for index in 0..<dateArray.count {
                     
-                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: last)
+                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: last, pet: self.pet)
                     repository.createItem(item)
+                    
+                    if alarmSwitch.isOn {
+                        if let time = self.nowTime {
+                            pushReservedNotification(title: "테스트", body: "테스트입니다", date: self.dateArray[index], time: time, identifier: "\(self.registerDate) + \(self.dateArray[index])")
+                        }
+                    }
                 }
             }
             
             self.save = true
             
         }
+        
+        print("====등록 후====")
+        notification.getPendingNotificationRequests(completionHandler: { requests in
+            for request in requests {
+                print(request.trigger)
+            }
+        })
         navigationController?.popViewController(animated: true)
     }
     
     @objc func leftButtonItemClicked() {
         navigationController?.popViewController(animated: true)
     }
-}
+    
+    func makeTriggerComponents(date: Date, time: Date) -> Date {
+        // Calendar 및 DateComponents 생성
 
+        var calendar = Calendar.current
+        let componentsFromDate = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let componentsFromTime = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: time)
+        
+        var newComponents = DateComponents()
+        newComponents.year = componentsFromDate.year
+        newComponents.month = componentsFromDate.month
+        newComponents.day = componentsFromDate.day
+        newComponents.hour = componentsFromTime.hour
+        newComponents.minute = componentsFromTime.minute
+        
+        // 새로운 날짜 생성
+        if let newDate = calendar.date(from: newComponents) {
+            return newDate
+        } else {
+            return Date()
+        }
+    }
+    
 
-
-
-#Preview {
-    NewPlanViewController()
+    func pushReservedNotification(title: String, body: String, date: Date, time: Date, identifier: String) {
+        
+        let notificationContent = UNMutableNotificationContent()
+        notificationContent.title = title
+        notificationContent.body = body
+        
+        let target = makeTriggerComponents(date: date, time: time)
+        
+        let triggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: target)
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: identifier,
+                                            content: notificationContent,
+                                            trigger: trigger)
+        
+        self.notification.add(request) { error in
+            if let error = error {
+                print("Notification Error: ", error)
+            }
+        }
+    }
 }
