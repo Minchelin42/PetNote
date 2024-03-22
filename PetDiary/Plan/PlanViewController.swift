@@ -13,15 +13,15 @@ import Toast
 import SwipeCellKit
 
 class Notification {
-    let notification = UNUserNotificationCenter.current()
+    static let notification = UNUserNotificationCenter.current()
+    
+    private init() { }
 }
 
 class PlanViewController: UIViewController {
     
-    let petName = UserDefaultManager.shared.nowPet
-    
-    let notification = Notification().notification
-    
+    var petName: String!
+
     let mainView = PlanView()
     
     var selectDate = Date()
@@ -29,12 +29,7 @@ class PlanViewController: UIViewController {
     let repository = PlanRepository()
     var list: Results<PlanTable>!
     
-    lazy var pet = {
-       let repository = PetRepository()
-        return repository.fetch().where {
-            $0.name == petName
-        }
-    }()
+    var pet: Results<PetTable>!
     
     override func loadView() {
         self.view = mainView
@@ -55,7 +50,7 @@ class PlanViewController: UIViewController {
         mainView.collectionView.register(PlanCollectionViewCell.self, forCellWithReuseIdentifier: "Plan")
         
         
-        mainView.dayLabel.text = "\(pet[0].name)와의 \(self.days(from: pet[0].meet, to: Date()))일 째 하루의 기록"
+        
         mainView.plusButton.addTarget(self, action: #selector(plusButtonClicked), for: .touchUpInside)
 
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeEvent(_:)))
@@ -75,6 +70,17 @@ class PlanViewController: UIViewController {
 
         let predicate = NSPredicate(format: "date >= %@ && date < %@", start as NSDate, end as NSDate)
         
+        petName = UserDefaultManager.shared.nowPet
+        
+        pet = {
+            print("펫 이름: \(petName)")
+           let repository = PetRepository()
+            return repository.fetch().where {
+                $0.name == petName
+            }
+        }()
+        
+        self.mainView.dayLabel.text = "\(pet[0].name)(이)와의 \(self.days(from: pet[0].meet, to: Date()))일 째 하루의 기록"
         self.list = repository.fetch().filter(predicate)
         self.mainView.collectionView.reloadData()
         self.mainView.calendar.reloadData()
@@ -92,7 +98,6 @@ class PlanViewController: UIViewController {
         let vc = NewPlanViewController()
         vc.firstDate = self.selectDate
         vc.saveComplete = { type, save, date in
-            print(type)
             if save && type == .new {
                 var style = ToastStyle()
                 style.backgroundColor = Color.lightGreen!
@@ -239,21 +244,12 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
 
             self.navigationController?.pushViewController(vc, animated: true)
-            print("edit 클릭")
             
             return
         }
         
         let delete = SwipeAction(style: .default, title: "Delete") { [self] action, indexPath in
-            
-            print("delete 클릭")
-            
-            print("====삭제 전====")
-            notification.getPendingNotificationRequests(completionHandler: { requests in
-                for request in requests {
-                    print(request.trigger)
-                }
-            })
+  
             
             let realm = try! Realm()
             try! realm.write {
@@ -261,16 +257,25 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
 
                 let prePlan = realm.objects(PlanTable.self).filter(predicate)
                 
-                for index in 0..<prePlan.count {
-                    notification.removePendingNotificationRequests(withIdentifiers: ["\(prePlan[index].registerDate) + \(prePlan[index].date)"])
-                }
-                
-                notification.getPendingNotificationRequests(completionHandler: { requests in
+                Notification.notification.getPendingNotificationRequests(completionHandler: { requests in
+                    
+                    print("삭제 전 ======")
                     for request in requests {
-                        print("====삭제 후====")
                         print(request.trigger)
                     }
                 })
+                
+                for index in 0..<prePlan.count {
+                    Notification.notification.removePendingNotificationRequests(withIdentifiers: ["\(prePlan[index].registerDate) + \(prePlan[index].date)"])
+                }
+
+               
+                Notification.notification.getPendingNotificationRequests(completionHandler: { requests in
+                    print("삭제 후 ======")
+                             for request in requests {
+                                 print(request.trigger)
+                             }
+                         })
                 
                 realm.delete(prePlan)
             }
@@ -327,8 +332,7 @@ extension PlanViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         self.navigationController?.pushViewController(vc, animated: true)
-        print("edit 클릭")
-        
+
         return
     }
     

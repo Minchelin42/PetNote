@@ -10,7 +10,7 @@ import SnapKit
 
 enum Setting {
     static let data = ["초기화"]
-    static let appInfo = ["개인정보 취급방침", "오픈소스 라이브러리"]
+    static let appInfo = ["버전 정보"]
 }
 
 class SettingViewController: UIViewController {
@@ -28,13 +28,20 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = Color.background
-        
-        print("=========")
-        print(UserDefaultManager.shared.nowPet)
 
         configureHierarchy()
         configureLayout()
         configureView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("로드 시 파일 이름 : \(pet.id)")
+        
+        profile.profileButton.setImage(loadImageToDocument(filename: String(describing: pet.id)), for: .normal)
+        profile.nameLabel.text = "\(pet.name)"
+        profile.birthLabel.text = "🎂 \(pet.birth.changeDateFormat())"
     }
     
     func configureHierarchy() {
@@ -68,19 +75,19 @@ class SettingViewController: UIViewController {
         profile.layer.shadowOffset = CGSize(width: 0, height: 5)
         profile.layer.shadowOpacity = 0.3
         profile.layer.shadowRadius = 3.0
-        
-        profile.profileButton.setImage(loadImageToDocument(filename: pet.name), for: .normal)
-        profile.nameLabel.text = "\(pet.name)"
-        profile.birthLabel.text = "🎂 \(pet.birth.changeDateFormat())"
-        
+
         profile.profileButton.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
         profile.editButton.addTarget(self, action: #selector(editProfile), for: .touchUpInside)
+        
+        profile.profileButton.contentVerticalAlignment = .fill
+        profile.profileButton.contentHorizontalAlignment = .fill
         
         settingView.delegate = self
         settingView.dataSource = self
         settingView.backgroundColor = .clear
         settingView.separatorStyle = .none
-        settingView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
+        settingView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        settingView.register(VersionTableViewCell.self, forCellReuseIdentifier: "version")
     }
     
     @objc func editProfile() {
@@ -106,7 +113,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "version", for: indexPath) as! VersionTableViewCell
         
         var item: [String] = []
         
@@ -115,11 +122,16 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             item = Setting.appInfo
         }
+
+        cell.title.text = item[indexPath.row]
         
-        cell.textLabel?.font = .systemFont(ofSize: 14, weight: .medium)
-        cell.textLabel?.text = "\(item[indexPath.row])"
-        cell.backgroundColor = Color.darkGreen?.withAlphaComponent(0.3)
+        if item[indexPath.row] == "버전 정보" {
+            cell.version.text = "1.0.0"
+        }
+        cell.clipsToBounds = true
+        cell.layer.cornerRadius = 10
         cell.selectionStyle = .none
+        
         return cell
     }
     
@@ -145,7 +157,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
                 
                 let sceneDelegate = windowScene?.delegate as? SceneDelegate
                 
-                let nav = UINavigationController(rootViewController: ProfileViewController())
+                let nav = UINavigationController(rootViewController: OnboardingViewController())
 
                 sceneDelegate?.window?.rootViewController = nav
                 sceneDelegate?.window?.makeKeyAndVisible()
@@ -156,7 +168,6 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
 
             present(alert, animated: true)
         }
-        print(indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

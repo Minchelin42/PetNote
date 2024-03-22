@@ -9,7 +9,8 @@ import Foundation
 import RealmSwift
 
 final class PetTable: Object {
-    @Persisted(primaryKey: true) var name: String
+    @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted var name: String
     @Persisted var gender: Bool
     @Persisted var birth: Date
     @Persisted var meet: Date

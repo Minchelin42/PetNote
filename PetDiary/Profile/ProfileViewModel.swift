@@ -16,6 +16,7 @@ class ProfileViewModel {
     var firstMeet: Observable<Date?> = Observable(nil)
     var birth: Observable<Date?> = Observable(nil)
     var weight: Observable<Double?> = Observable(nil)
+    var image = Observable("")
     
     var checkInputData = Observable(false)
     var registerButtonClicked: Observable<Void?> = Observable(nil)
@@ -44,17 +45,14 @@ class ProfileViewModel {
     }
     
     func checkInputDataStatus() {
-        print("checkInputDataStatus")
         if let _ = gender.value, let _ = firstMeet.value, let _ = birth.value, let _ = weight.value {
             if name.value.isEmpty {
                 self.checkInputData.value = false
             } else {
                 self.checkInputData.value = true
             }
-            print("지금 상태 체크 \(self.checkInputData.value)")
         } else {
             self.checkInputData.value = false
-            print("지금 상태 체크 \(self.checkInputData.value)")
         }
     }
     
@@ -72,6 +70,12 @@ class ProfileViewModel {
         
         if !self.checkDate.value {
             repository.createItem(item)
+            
+            let registerPet = repository.fetch()
+            
+            if let id = registerPet.last?.id {
+                self.image.value = String(describing: id)
+            }
         }
         
     }

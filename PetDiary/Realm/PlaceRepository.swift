@@ -34,7 +34,6 @@ final class PlaceRepository {
         do {
             try realm.write {
                 realm.add(item)
-//                print("Place Register")
             }
         } catch {
             print(error)

@@ -18,9 +18,7 @@ enum PlanType {
 
 class NewPlanViewController: UIViewController {
     
-    let notification = Notification().notification
-    
-    let pet = PetRepository().fetch().first?.name ?? ""
+    var pet: Results<PetTable>!
     
     let repository = PlanRepository()
     
@@ -97,6 +95,13 @@ class NewPlanViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = false
+        
+        pet = {
+           let repository = PetRepository()
+            return repository.fetch().where {
+                $0.name == UserDefaultManager.shared.nowPet
+            }
+        }()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -228,7 +233,7 @@ class NewPlanViewController: UIViewController {
             navigationItem.title = "할 일 수정"
         }
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: Color.darkGreen]
-        UINavigationBar.appearance().tintColor = Color.darkGreen
+//        UINavigationBar.appearance().tintColor = Color.darkGreen
         
         titleLabel.text = "할 일"
         titleTextField.text = nowTitle
@@ -321,10 +326,22 @@ class NewPlanViewController: UIViewController {
             return
         }
         
+   
+        Notification.notification.getPendingNotificationRequests(completionHandler: { requests in
+            print("저장 전 ======")
+                     for request in requests {
+                         print(request.trigger)
+                     }
+                 })
+        navigationController?.popViewController(animated: true)
+        
         if type == .new {
             repository.printLink()
+            
+            
+            
             if dateArray.count == 1 {
-                let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[0], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: nil, pet: self.pet)
+                let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[0], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: nil, pet: self.pet[0].id)
                 repository.createItem(item)
                 
                 if alarmSwitch.isOn {
@@ -334,7 +351,7 @@ class NewPlanViewController: UIViewController {
                 }
             } else {
                 for index in 0..<dateArray.count {
-                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: self.dateArray.last, pet: self.pet)
+                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: self.dateArray.last, pet: self.pet[0].id)
                     repository.createItem(item)
                     
                     if alarmSwitch.isOn {
@@ -361,11 +378,9 @@ class NewPlanViewController: UIViewController {
                 let predicate = NSPredicate(format: "registerDate == %@", self.registerDate as NSDate)
                 
                 let prePlan = repository.fetch().filter(predicate)
-                print("prePlan 출력")
-                print(prePlan)
                 
                 for index in 0..<prePlan.count {
-                    notification.removePendingNotificationRequests(withIdentifiers: ["\(prePlan[index].registerDate) + \(prePlan[index].date)"])
+                    Notification.notification.removePendingNotificationRequests(withIdentifiers: ["\(prePlan[index].registerDate) + \(prePlan[index].date)"])
                 }
                 
                 realm.delete(prePlan)
@@ -385,7 +400,7 @@ class NewPlanViewController: UIViewController {
                 
                 for index in 0..<dateArray.count {
                     
-                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: last, pet: self.pet)
+                    let item = PlanTable(title: titleTextField.text ?? "", memo: memoTextView.text ?? "", date: self.dateArray[index], alarm: alarmSwitch.isOn, time: self.nowTime, registerDate: self.registerDate, firstDate: self.dateArray[0], lastDate: last, pet: self.pet[0].id)
                     repository.createItem(item)
                     
                     if alarmSwitch.isOn {
@@ -393,20 +408,23 @@ class NewPlanViewController: UIViewController {
                             pushReservedNotification(title: "테스트", body: "테스트입니다", date: self.dateArray[index], time: time, identifier: "\(self.registerDate) + \(self.dateArray[index])")
                         }
                     }
+
                 }
             }
             
             self.save = true
             
         }
+     
         
-        print("====등록 후====")
-        notification.getPendingNotificationRequests(completionHandler: { requests in
-            for request in requests {
-                print(request.trigger)
-            }
-        })
+        Notification.notification.getPendingNotificationRequests(completionHandler: { requests in
+            print("저장 후 ======")
+                     for request in requests {
+                         print(request.trigger)
+                     }
+                 })
         navigationController?.popViewController(animated: true)
+       
     }
     
     @objc func leftButtonItemClicked() {
@@ -452,7 +470,7 @@ class NewPlanViewController: UIViewController {
                                             content: notificationContent,
                                             trigger: trigger)
         
-        self.notification.add(request) { error in
+        Notification.notification.add(request) { error in
             if let error = error {
                 print("Notification Error: ", error)
             }
