@@ -13,6 +13,7 @@
 		391245A62BA5E89E005EDF39 /* PlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391245A52BA5E89E005EDF39 /* PlaceViewController.swift */; };
 		392C554E2BAD953E0089FB0D /* VersionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C554D2BAD953E0089FB0D /* VersionTableViewCell.swift */; };
 		392C55512BADB4770089FB0D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C55502BADB4770089FB0D /* OnboardingViewController.swift */; };
+		392C55532BADE4500089FB0D /* ProfileScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C55522BADE4500089FB0D /* ProfileScrollView.swift */; };
 		394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */; };
 		394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E42B9C0F60000AF69F /* CompleteButton.swift */; };
 		394054E72B9C1D5A000AF69F /* GenderBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */; };
@@ -49,7 +50,6 @@
 		396D2FEB2B9B5C5400613BFE /* ProfileLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FEA2B9B5C5400613BFE /* ProfileLabel.swift */; };
 		396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FEC2B9B5DE800613BFE /* ProfileInputButton.swift */; };
 		396D2FEF2B9B65AC00613BFE /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FEE2B9B65AC00613BFE /* BaseView.swift */; };
-		396D2FF12B9B65FB00613BFE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FF02B9B65FB00613BFE /* ProfileView.swift */; };
 		396D2FF42B9BE7F800613BFE /* PetTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FF32B9BE7F800613BFE /* PetTable.swift */; };
 		396D2FFB2B9BEB7000613BFE /* PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396D2FFA2B9BEB7000613BFE /* PetRepository.swift */; };
 		396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FFD2B9BEDA000613BFE /* Realm */; };
@@ -78,6 +78,7 @@
 		391245A52BA5E89E005EDF39 /* PlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewController.swift; sourceTree = "<group>"; };
 		392C554D2BAD953E0089FB0D /* VersionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionTableViewCell.swift; sourceTree = "<group>"; };
 		392C55502BADB4770089FB0D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		392C55522BADE4500089FB0D /* ProfileScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScrollView.swift; sourceTree = "<group>"; };
 		394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBottomSheetViewController.swift; sourceTree = "<group>"; };
 		394054E42B9C0F60000AF69F /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +112,6 @@
 		396D2FEA2B9B5C5400613BFE /* ProfileLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLabel.swift; sourceTree = "<group>"; };
 		396D2FEC2B9B5DE800613BFE /* ProfileInputButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInputButton.swift; sourceTree = "<group>"; };
 		396D2FEE2B9B65AC00613BFE /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		396D2FF02B9B65FB00613BFE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		396D2FF32B9BE7F800613BFE /* PetTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetTable.swift; sourceTree = "<group>"; };
 		396D2FFA2B9BEB7000613BFE /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
 		3991E0FF2BA8A4C8006DBBD0 /* PlaceTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTable.swift; sourceTree = "<group>"; };
@@ -255,11 +255,11 @@
 			isa = PBXGroup;
 			children = (
 				396D2FD32B998AA100613BFE /* ProfileViewController.swift */,
-				396D2FF02B9B65FB00613BFE /* ProfileView.swift */,
 				394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */,
 				394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */,
 				394054F32B9D76C9000AF69F /* ProfileViewModel.swift */,
 				394054FA2B9DDAEF000AF69F /* CameraBottomSheetViewController.swift */,
+				392C55522BADE4500089FB0D /* ProfileScrollView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -421,12 +421,12 @@
 				39CFA77F2BA025680057827F /* NewPlanTextField.swift in Sources */,
 				394054E92B9C1F8B000AF69F /* Extension + UIButton.swift in Sources */,
 				394054EF2B9C311C000AF69F /* Extension + TextField.swift in Sources */,
-				396D2FF12B9B65FB00613BFE /* ProfileView.swift in Sources */,
 				39C1D64E2B9F3EF100418B68 /* PlanView.swift in Sources */,
 				394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */,
 				396D2FEB2B9B5C5400613BFE /* ProfileLabel.swift in Sources */,
 				394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */,
 				39CFA7812BA037560057827F /* GreenLine.swift in Sources */,
+				392C55532BADE4500089FB0D /* ProfileScrollView.swift in Sources */,
 				39CFA7762BA018450057827F /* NewPlanViewController.swift in Sources */,
 				396D2FEF2B9B65AC00613BFE /* BaseView.swift in Sources */,
 				396D2FC12B99839200613BFE /* ViewController.swift in Sources */,
@@ -622,6 +622,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -655,6 +656,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

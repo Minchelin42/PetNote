@@ -120,7 +120,7 @@ class GenderBottomSheetViewController: UIViewController {
         boyButton.snp.makeConstraints { make in
             make.height.equalTo(45)
             make.horizontalEdges.equalToSuperview().inset(35)
-            make.top.equalToSuperview().inset(50)
+            make.top.equalToSuperview().inset(30)
         }
         
         girlButton.snp.makeConstraints { make in
@@ -132,7 +132,7 @@ class GenderBottomSheetViewController: UIViewController {
         clearButton.snp.makeConstraints { make in
             make.height.equalTo(45)
             make.horizontalEdges.equalToSuperview().inset(35)
-            make.bottom.equalToSuperview().inset(50)
+            make.top.equalTo(girlButton.snp.bottom).offset(8)
         }
     }
     

@@ -15,7 +15,7 @@ enum ProfileType {
 
 class ProfileViewController: UIViewController {
 
-    private let mainView = ProfileView()
+    private let mainView = ProfileScrollView()
     
     let viewModel = ProfileViewModel()
     
@@ -34,7 +34,10 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         
         view.addGestureRecognizer(tapGesture)
-        
+
+        mainView.scrollView.delegate = self
+        mainView.scrollView.bounces = false
+
         if type == .new {
             navigationItem.title = "반려동물 정보 등록"
         } else {
@@ -70,7 +73,6 @@ class ProfileViewController: UIViewController {
         viewModel.name.bind { name in
             self.mainView.nameTextField.text = name
             self.viewModel.checkInputDataStatus()
-//            self.viewModel.duplicateTest()
         }
         
         viewModel.gender.bind { gender in
@@ -275,13 +277,6 @@ class ProfileViewController: UIViewController {
             let save = UIAlertAction(title: "저장", style: .default) { action in
                 
                 self.viewModel.registerButtonClicked.value = ()
-                
-//                if let image = self.mainView.profileButton.currentImage {
-////                    self.saveImageToDocument(image: image, filename: "\(self.viewModel.name.value)")
-//                    print("저장 시 파일 이름: \(self.viewModel.image.value)")
-//                    self.saveImageToDocument(image: image, filename: "\(self.viewModel.image.value)")
-//                }
-         
 
                 sleep(1)
                 
@@ -357,3 +352,8 @@ extension ProfileViewController: UITextFieldDelegate {
     }
 }
 
+extension ProfileViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.y)
+    }
+}

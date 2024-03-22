@@ -1,14 +1,17 @@
 //
-//  ProfileView.swift
+//  ProfileScrollView.swift
 //  PetDiary
 //
-//  Created by 민지은 on 2024/03/09.
+//  Created by 민지은 on 2024/03/23.
 //
 
 import UIKit
 import SnapKit
 
-final class ProfileView: BaseView {
+final class ProfileScrollView: UIView {
+    
+    let scrollView = UIScrollView()
+    let contentView = UIView()
 
     let profileButton = ProfileButton()
     let cameraButton = CameraButton()
@@ -40,29 +43,54 @@ final class ProfileView: BaseView {
         return button
     }()
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        backgroundColor = Color.background
 
-  
-    override func configureHierarchy() {
-        addSubview(profileButton)
-        addSubview(cameraButton)
-        addSubview(nameLabel)
-        addSubview(nameTextField)
-        addSubview(genderLabel)
-        addSubview(genderButton)
-        addSubview(birthLabel)
-        addSubview(birthButton)
-        addSubview(meetLabel)
-        addSubview(meetButton)
-        addSubview(weightLabel)
-        addSubview(weightTextField)
-        addSubview(registerButton)
+        configureHierarchy()
+        configureLayout()
+        configureView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configureHierarchy() {
+
+        addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(profileButton)
+        contentView.addSubview(cameraButton)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(nameTextField)
+        contentView.addSubview(genderLabel)
+        contentView.addSubview(genderButton)
+        contentView.addSubview(birthLabel)
+        contentView.addSubview(birthButton)
+        contentView.addSubview(meetLabel)
+        contentView.addSubview(meetButton)
+        contentView.addSubview(weightLabel)
+        contentView.addSubview(weightTextField)
+        contentView.addSubview(registerButton)
       
     }
     
-    override func configureLayout() {
+    func configureLayout() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.verticalEdges.equalTo(scrollView.snp.verticalEdges)
+            make.width.equalTo(scrollView.snp.width)
+        }
+        
         profileButton.snp.makeConstraints { make in
-            make.centerX.equalTo(safeAreaLayoutGuide)
-            make.top.equalTo(safeAreaLayoutGuide).inset(20)
+            make.centerX.equalTo(contentView)
+            make.top.equalTo(contentView).inset(20)
             make.size.equalTo(160)
         }
         
@@ -74,72 +102,75 @@ final class ProfileView: BaseView {
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileButton.snp.bottom).offset(20)
-            make.leading.equalTo(safeAreaLayoutGuide).inset(40)
+            make.leading.equalTo(contentView).inset(40)
         }
         
         nameTextField.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
+            make.horizontalEdges.equalTo(contentView).inset(35)
             make.height.equalTo(inputHeight)
         }
         
         genderLabel.snp.makeConstraints { make in
             make.top.equalTo(nameTextField.snp.bottom).offset(9)
-            make.leading.equalTo(safeAreaLayoutGuide).inset(40)
+            make.leading.equalTo(contentView).inset(40)
         }
         
         genderButton.snp.makeConstraints { make in
             make.top.equalTo(genderLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
+            make.horizontalEdges.equalTo(contentView).inset(35)
             make.height.equalTo(inputHeight)
         }
         
         birthLabel.snp.makeConstraints { make in
             make.top.equalTo(genderButton.snp.bottom).offset(9)
-            make.leading.equalTo(safeAreaLayoutGuide).inset(40)
+            make.leading.equalTo(contentView).inset(40)
         }
         
         birthButton.snp.makeConstraints { make in
             make.top.equalTo(birthLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
+            make.horizontalEdges.equalTo(contentView).inset(35)
             make.height.equalTo(inputHeight)
         }
         
         meetLabel.snp.makeConstraints { make in
             make.top.equalTo(birthButton.snp.bottom).offset(9)
-            make.leading.equalTo(safeAreaLayoutGuide).inset(40)
+            make.leading.equalTo(contentView).inset(40)
         }
         
         meetButton.snp.makeConstraints { make in
             make.top.equalTo(meetLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
+            make.horizontalEdges.equalTo(contentView).inset(35)
             make.height.equalTo(inputHeight)
         }
         
         weightLabel.snp.makeConstraints { make in
             make.top.equalTo(meetButton.snp.bottom).offset(9)
-            make.leading.equalTo(safeAreaLayoutGuide).inset(40)
+            make.leading.equalTo(contentView).inset(40)
         }
         
         weightTextField.snp.makeConstraints { make in
             make.top.equalTo(weightLabel.snp.bottom).offset(4)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
+            make.horizontalEdges.equalTo(contentView).inset(35)
             make.height.equalTo(inputHeight)
         }
         
         registerButton.snp.makeConstraints { make in
             make.top.equalTo(weightTextField.snp.bottom).offset(16)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
+            make.horizontalEdges.equalTo(contentView).inset(35)
             make.height.equalTo(inputHeight)
+            make.bottom.equalTo(contentView).inset(50)
+            
         }
         
     }
     
-    override func configureView() {
+    func configureView() {
+ 
         profileButton.layer.cornerRadius = 80
         profileButton.setImage(UIImage(named: "profile"), for: .normal)
         profileButton.contentVerticalAlignment = .fill
-        profileButton.contentHorizontalAlignment = .fill 
+        profileButton.contentHorizontalAlignment = .fill
         
         cameraButton.layer.cornerRadius = 25
         
@@ -166,3 +197,6 @@ final class ProfileView: BaseView {
 }
 
 
+#Preview {
+    ProfileViewController()
+}

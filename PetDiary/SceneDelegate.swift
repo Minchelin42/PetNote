@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             nav = UINavigationController(rootViewController: PetDiaryTabBarController())
             
         }
-        
+
         UINavigationBar.appearance().tintColor = Color.darkGreen
 
         window?.rootViewController = nav

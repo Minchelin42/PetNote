@@ -346,7 +346,7 @@ class NewPlanViewController: UIViewController {
                 
                 if alarmSwitch.isOn {
                     if let time = self.nowTime {
-                        pushReservedNotification(title: "오늘의 할 일", body: "루비(이)와 산책하기", date: self.dateArray[0], time: time, identifier: "\(self.registerDate) + \(self.dateArray[0])")
+                        pushReservedNotification(title: "오늘의 할 일", body: "\(self.pet[0].name)(이)와 \(titleTextField.text ?? "행복한 시간 보내기")", date: self.dateArray[0], time: time, identifier: "\(self.registerDate) + \(self.dateArray[0])")
                     }
                 }
             } else {
@@ -356,7 +356,7 @@ class NewPlanViewController: UIViewController {
                     
                     if alarmSwitch.isOn {
                         if let time = self.nowTime {
-                            pushReservedNotification(title: "테스트", body: "테스트입니다", date: self.dateArray[index], time: time, identifier: "\(self.registerDate) + \(self.dateArray[index])")
+                            pushReservedNotification(title: "오늘의 할 일", body: "\(self.pet[0].name)(이)와 \(titleTextField.text ?? "행복한 시간 보내기")", date: self.dateArray[index], time: time, identifier: "\(self.registerDate) + \(self.dateArray[index])")
                         }
                     }
                 }
@@ -393,7 +393,7 @@ class NewPlanViewController: UIViewController {
                 
                 if alarmSwitch.isOn {
                     if let time = self.nowTime {
-                        pushReservedNotification(title: "테스트", body: "테스트입니다", date: self.dateArray[0], time: time, identifier: "\(self.registerDate) + \(self.dateArray[0])")
+                        pushReservedNotification(title: "오늘의 할 일", body: "\(self.pet[0].name)(이)와 \(titleTextField.text ?? "행복한 시간 보내기")", date: self.dateArray[0], time: time, identifier: "\(self.registerDate) + \(self.dateArray[0])")
                     }
                 }
             } else {
@@ -405,7 +405,7 @@ class NewPlanViewController: UIViewController {
                     
                     if alarmSwitch.isOn {
                         if let time = self.nowTime {
-                            pushReservedNotification(title: "테스트", body: "테스트입니다", date: self.dateArray[index], time: time, identifier: "\(self.registerDate) + \(self.dateArray[index])")
+                            pushReservedNotification(title: "오늘의 할 일", body: "\(self.pet[0].name)(이)와 \(titleTextField.text ?? "행복한 시간 보내기")", date: self.dateArray[index], time: time, identifier: "\(self.registerDate) + \(self.dateArray[index])")
                         }
                     }
 

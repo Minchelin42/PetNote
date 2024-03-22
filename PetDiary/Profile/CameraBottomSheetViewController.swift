@@ -91,13 +91,14 @@ class CameraBottomSheetViewController: UIViewController {
         cameraButton.snp.makeConstraints { make in
             make.height.equalTo(45)
             make.horizontalEdges.equalToSuperview().inset(35)
-            make.top.equalToSuperview().inset(50)
+            make.top.equalToSuperview().inset(30)
+//            make.bottom.equalTo(albumButton.snp.top).inset(10)
         }
         
         albumButton.snp.makeConstraints { make in
             make.height.equalTo(45)
+            make.top.equalTo(cameraButton.snp.bottom).offset(10)
             make.horizontalEdges.equalToSuperview().inset(35)
-            make.bottom.equalToSuperview().inset(50)
         }
     }
     
