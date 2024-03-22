@@ -14,6 +14,7 @@
 		392C554E2BAD953E0089FB0D /* VersionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C554D2BAD953E0089FB0D /* VersionTableViewCell.swift */; };
 		392C55512BADB4770089FB0D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C55502BADB4770089FB0D /* OnboardingViewController.swift */; };
 		392C55532BADE4500089FB0D /* ProfileScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C55522BADE4500089FB0D /* ProfileScrollView.swift */; };
+		393624622BAE0E5D00C9218D /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 393624612BAE0E5D00C9218D /* SVProgressHUD */; };
 		394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */; };
 		394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E42B9C0F60000AF69F /* CompleteButton.swift */; };
 		394054E72B9C1D5A000AF69F /* GenderBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */; };
@@ -135,6 +136,7 @@
 			files = (
 				394054ED2B9C2812000AF69F /* RealmSwift in Frameworks */,
 				39CFA77D2BA01CFF0057827F /* Alamofire in Frameworks */,
+				393624622BAE0E5D00C9218D /* SVProgressHUD in Frameworks */,
 				396D30002B9BEDA000613BFE /* RealmSwift in Frameworks */,
 				39CFA7842BA0B4D60057827F /* Toast in Frameworks */,
 				396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */,
@@ -348,6 +350,7 @@
 				39CFA77C2BA01CFF0057827F /* Alamofire */,
 				39CFA7832BA0B4D60057827F /* Toast */,
 				39CFA78E2BA2BFFF0057827F /* SwipeCellKit */,
+				393624612BAE0E5D00C9218D /* SVProgressHUD */,
 			);
 			productName = PetDiary;
 			productReference = 396D2FB92B99839200613BFE /* PetDiary.app */;
@@ -385,6 +388,7 @@
 				39CFA77B2BA01CFF0057827F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				39CFA7822BA0B4D60057827F /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				39CFA78D2BA2BFFF0057827F /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
+				393624602BAE0E5D00C9218D /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
 			);
 			productRefGroup = 396D2FBA2B99839200613BFE /* Products */;
 			projectDirPath = "";
@@ -698,6 +702,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		393624602BAE0E5D00C9218D /* XCRemoteSwiftPackageReference "SVProgressHUD" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVProgressHUD/SVProgressHUD.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.1;
+			};
+		};
 		394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -757,6 +769,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		393624612BAE0E5D00C9218D /* SVProgressHUD */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 393624602BAE0E5D00C9218D /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
+			productName = SVProgressHUD;
+		};
 		394054EA2B9C2812000AF69F /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 396D2FFC2B9BEDA000613BFE /* XCRemoteSwiftPackageReference "realm-swift" */;

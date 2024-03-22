@@ -10,6 +10,7 @@ import SnapKit
 import MapKit
 import RealmSwift
 import Toast
+import SVProgressHUD
 
 enum Category {
     static let shopping = "Goods"
@@ -60,20 +61,15 @@ class PlaceViewController: UIViewController {
 
     func loadPlaceData() {
         
+        SVProgressHUD.show(withStatus: "장소 정보를 불러오는 중입니다")
+        
         DispatchQueue.global().async {
             var arr: Items = Items(item: [])
             var inputData: [PlaceTable] = []
-            
-            DispatchQueue.main.async {
-                var style = ToastStyle()
-                style.backgroundColor = Color.lightGreen!
-                style.messageColor = .white
-                style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
-                self.view.makeToast("장소 정보를 불러오는 중입니다", duration: 2.0, position: .bottom, style: style)
-            }
 
             PlaceAPI.shared.callRequest { status, result, error in
-
+                
+                SVProgressHUD.dismiss()
                 guard let status = status else {
                     print("네트워크 통신 오류")
                     var style = ToastStyle()
