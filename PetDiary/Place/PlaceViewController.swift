@@ -63,8 +63,15 @@ class PlaceViewController: UIViewController {
         DispatchQueue.global().async {
             var arr: Items = Items(item: [])
             var inputData: [PlaceTable] = []
+            
+            DispatchQueue.main.async {
+                var style = ToastStyle()
+                style.backgroundColor = Color.lightGreen!
+                style.messageColor = .white
+                style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+                self.view.makeToast("장소 정보를 불러오는 중입니다", duration: 2.0, position: .bottom, style: style)
+            }
 
-            print("여기 시작", Date.now)
             PlaceAPI.shared.callRequest { status, result, error in
 
                 guard let status = status else {
@@ -94,8 +101,6 @@ class PlaceViewController: UIViewController {
                     
                     inputData.append(inputPlace)
                 }
-
-                print("여기 반복문 끝", Date.now)
 
                 self.repository.inputItem(inputData)
                 
@@ -279,14 +284,7 @@ class PlaceViewController: UIViewController {
 
 extension PlaceViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(#function)
-        print(locations)
-        
         if let coordinate = locations.last?.coordinate {
-            print(coordinate)
-            print(coordinate.latitude)
-            print(coordinate.longitude)
-            
             self.userLocation = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
             
             setRegionAndAnnotation(self.userLocation)
@@ -309,7 +307,6 @@ extension PlaceViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         DispatchQueue.main.async {
-            print(#function)
             let authStatus = manager.authorizationStatus
             self.setLocation(authStatus)
             self.getRange()
@@ -344,18 +341,16 @@ extension PlaceViewController: MKMapViewDelegate {
         let latitude = view.annotation?.coordinate.latitude,
         let longitude = view.annotation?.coordinate.longitude else { return }
         
-        if latitude == self.userLocation.latitude && longitude == self.userLocation.longitude {
-            
-            print("User Annotation")
-            return
-            
-        }
+        // MARK: - 사용자 위치 선택했을 때 터지는 거 수정하기
         
         let selectPlace = repository.fetch().where {
             $0.title == title ?? "" && $0.latitude == latitude && $0.longitude == longitude
         }
-        
-        print(selectPlace[0])
+
+        if selectPlace.isEmpty {
+            print("위치 정보 없음")
+            return
+        }
         
         placeInfoView.titleLabel.text = selectPlace[0].title
         placeInfoView.addressLabel.text = selectPlace[0].address
