@@ -30,10 +30,33 @@ final class PetRepository {
         }
     }
     
+    func editItem(id: ObjectId?, name: String, gender: Bool, birth: Date, meet: Date, weight: Double) {
+        do {
+            try realm.write {
+                realm.create(PetTable.self,
+                             value: ["id": id, "name": name, "gender": gender, "birth": birth, "meet": meet, "weight": weight],
+                             update: .modified)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
     func deleteItem(_ item: PetTable) {
         do{
             try realm.write {
                 realm.delete(item)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteAllItem() {
+        do {
+            try realm.write {
+                let allPet = realm.objects(PetTable.self)
+                realm.delete(allPet)
             }
         } catch {
             print(error)

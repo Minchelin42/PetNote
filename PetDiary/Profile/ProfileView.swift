@@ -62,7 +62,7 @@ final class ProfileView: BaseView {
     override func configureLayout() {
         profileButton.snp.makeConstraints { make in
             make.centerX.equalTo(safeAreaLayoutGuide)
-            make.top.equalTo(safeAreaLayoutGuide).inset(30)
+            make.top.equalTo(safeAreaLayoutGuide).inset(20)
             make.size.equalTo(160)
         }
         
@@ -73,7 +73,7 @@ final class ProfileView: BaseView {
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileButton.snp.bottom).offset(30)
+            make.top.equalTo(profileButton.snp.bottom).offset(20)
             make.leading.equalTo(safeAreaLayoutGuide).inset(40)
         }
         
@@ -128,7 +128,7 @@ final class ProfileView: BaseView {
         }
         
         registerButton.snp.makeConstraints { make in
-            make.top.equalTo(weightTextField.snp.bottom).offset(35)
+            make.top.equalTo(weightTextField.snp.bottom).offset(16)
             make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(35)
             make.height.equalTo(inputHeight)
         }
@@ -138,6 +138,9 @@ final class ProfileView: BaseView {
     override func configureView() {
         profileButton.layer.cornerRadius = 80
         profileButton.setImage(UIImage(named: "profile"), for: .normal)
+        profileButton.contentVerticalAlignment = .fill
+        profileButton.contentHorizontalAlignment = .fill 
+        
         cameraButton.layer.cornerRadius = 25
         
         nameLabel.text = "이름"

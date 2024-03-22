@@ -11,6 +11,8 @@
 		391245A12BA5BB55005EDF39 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391245A02BA5BB55005EDF39 /* PlaceModel.swift */; };
 		391245A32BA5BF84005EDF39 /* PlaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391245A22BA5BF84005EDF39 /* PlaceAPI.swift */; };
 		391245A62BA5E89E005EDF39 /* PlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391245A52BA5E89E005EDF39 /* PlaceViewController.swift */; };
+		392C554E2BAD953E0089FB0D /* VersionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C554D2BAD953E0089FB0D /* VersionTableViewCell.swift */; };
+		392C55512BADB4770089FB0D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C55502BADB4770089FB0D /* OnboardingViewController.swift */; };
 		394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */; };
 		394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E42B9C0F60000AF69F /* CompleteButton.swift */; };
 		394054E72B9C1D5A000AF69F /* GenderBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */; };
@@ -74,6 +76,8 @@
 		391245A02BA5BB55005EDF39 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		391245A22BA5BF84005EDF39 /* PlaceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAPI.swift; sourceTree = "<group>"; };
 		391245A52BA5E89E005EDF39 /* PlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceViewController.swift; sourceTree = "<group>"; };
+		392C554D2BAD953E0089FB0D /* VersionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionTableViewCell.swift; sourceTree = "<group>"; };
+		392C55502BADB4770089FB0D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBottomSheetViewController.swift; sourceTree = "<group>"; };
 		394054E42B9C0F60000AF69F /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +167,14 @@
 			path = Place;
 			sourceTree = "<group>";
 		};
+		392C554F2BADB4620089FB0D /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				392C55502BADB4770089FB0D /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		394054F52B9D76FB000AF69F /* Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				3969582F2BAC04CD0083E9EC /* SettingViewController.swift */,
+				392C554D2BAD953E0089FB0D /* VersionTableViewCell.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -212,6 +225,7 @@
 		396D2FBB2B99839200613BFE /* PetDiary */ = {
 			isa = PBXGroup;
 			children = (
+				392C554F2BADB4620089FB0D /* Onboarding */,
 				3969582E2BAC04B60083E9EC /* Setting */,
 				3912459F2BA5BB44005EDF39 /* Network */,
 				391245A42BA5E87D005EDF39 /* Place */,
@@ -421,6 +435,7 @@
 				391245A32BA5BF84005EDF39 /* PlaceAPI.swift in Sources */,
 				396D2FBD2B99839200613BFE /* AppDelegate.swift in Sources */,
 				394054F72B9D772A000AF69F /* Observable.swift in Sources */,
+				392C554E2BAD953E0089FB0D /* VersionTableViewCell.swift in Sources */,
 				396D2FED2B9B5DE800613BFE /* ProfileInputButton.swift in Sources */,
 				396D2FE12B9AE23A00613BFE /* ProfileButton.swift in Sources */,
 				3969582A2BA98EA30083E9EC /* PlaceInfoView.swift in Sources */,
@@ -442,6 +457,7 @@
 				39CFA7782BA01BE80057827F /* NewPlanLabel.swift in Sources */,
 				3991E1022BA8A5ED006DBBD0 /* PlaceRepository.swift in Sources */,
 				396D2FE92B9B5AE000613BFE /* Color.swift in Sources */,
+				392C55512BADB4770089FB0D /* OnboardingViewController.swift in Sources */,
 				39CFA7862BA0C0920057827F /* PlanTable.swift in Sources */,
 				396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */,
 				3912459E2BA5B4E2005EDF39 /* APIKey.swift in Sources */,
@@ -600,6 +616,7 @@
 				DEVELOPMENT_TEAM = 47HVCF82JP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetDiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "페트와노트";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -632,6 +649,7 @@
 				DEVELOPMENT_TEAM = 47HVCF82JP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PetDiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "페트와노트";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

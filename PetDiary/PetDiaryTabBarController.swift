@@ -32,6 +32,8 @@ class PetDiaryTabBarController: UITabBarController {
 
         let navSetting = UINavigationController(rootViewController: settingVC)
         
+        UINavigationBar.appearance().tintColor = Color.darkGreen
+
         setViewControllers([planVC, placeVC, navSetting], animated: false)
 
     }

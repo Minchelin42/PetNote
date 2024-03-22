@@ -20,11 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         var nav = UINavigationController()
         if repository.fetch().isEmpty {
-            nav = UINavigationController(rootViewController: ProfileViewController())
+            nav = UINavigationController(rootViewController: OnboardingViewController())
         } else {
             nav = UINavigationController(rootViewController: PetDiaryTabBarController())
             
         }
+        
+        UINavigationBar.appearance().tintColor = Color.darkGreen
 
         window?.rootViewController = nav
         
