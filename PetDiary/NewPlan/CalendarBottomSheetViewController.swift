@@ -285,7 +285,3 @@ extension CalendarBottomSheetViewController: FSCalendarDelegate {
     }
 }
 
-#Preview {
-    NewPlanViewController()
-}
-

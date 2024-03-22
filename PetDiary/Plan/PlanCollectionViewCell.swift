@@ -133,8 +133,4 @@ class PlanCollectionViewCell: SwipeCollectionViewCell {
     
 }
 
-#Preview {
-    PlanViewController()
-}
-
 

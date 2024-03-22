@@ -111,8 +111,6 @@ class CameraBottomSheetViewController: UIViewController {
     }
     
     @objc func albumButtonClicked() {
-        print(#function)
-        
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.allowsEditing = true
@@ -120,7 +118,6 @@ class CameraBottomSheetViewController: UIViewController {
     }
     
     @objc func cameraButtonClicked() {
-        print(#function)
         let vc = UIImagePickerController()
         vc.delegate = self
         vc.sourceType = .camera
@@ -149,8 +146,6 @@ class CameraBottomSheetViewController: UIViewController {
 
 extension CameraBottomSheetViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print(#function)
-
         dismiss(animated: true)
     }
     

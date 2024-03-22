@@ -126,15 +126,12 @@ class DateBottomSheetViewController: UIViewController {
     }
     
     @objc func clearButtonClicked() {
-        print(datePicker.date)
         if self.dateType == .birth {
             viewModel.birth.value = datePicker.date
         } else if dateType == .firstMeet{
             viewModel.firstMeet.value = datePicker.date
-            print(viewModel.firstMeet.value)
         } else {
             self.time = datePicker.date
-            print(datePicker.date.changeDateToTime())
         }
         bottomSheetDisappear()
     }
@@ -157,7 +154,3 @@ class DateBottomSheetViewController: UIViewController {
     
 }
 
-
-#Preview {
-    DateBottomSheetViewController()
-}

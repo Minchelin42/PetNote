@@ -122,6 +122,3 @@ class PlanView: BaseView {
     
 }
 
-#Preview {
-    PlanViewController()
-}

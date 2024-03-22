@@ -73,6 +73,3 @@ class PlaceInfoView: UIView {
     
 }
 
-#Preview {
-    PlaceInfoView()
-}

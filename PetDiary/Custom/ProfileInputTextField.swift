@@ -27,10 +27,3 @@ class ProfileInputTextField: UITextField {
     
     
 }
-
-
-//
-//
-//#Preview {
-//    ProfileViewController()
-//}

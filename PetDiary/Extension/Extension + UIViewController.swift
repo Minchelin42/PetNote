@@ -13,8 +13,10 @@ extension UIViewController {
         let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")
         
         if FileManager.default.fileExists(atPath: fileURL.path()) {
+            print("이미지 로드 완료")
             return UIImage(contentsOfFile: fileURL.path())
         } else {
+            print("이미지 로드 실패")
             return nil
         }
     }
@@ -27,6 +29,7 @@ extension UIViewController {
         guard let data = image.jpegData(compressionQuality: 0.5) else { return }
         
         do {
+            print("이미지 저장 완료")
             try data.write(to: fileURL)
         } catch {
             print("file save error", error)
@@ -39,6 +42,7 @@ extension UIViewController {
         
         if FileManager.default.fileExists(atPath: fileURL.path()) {
             do {
+                print("이미지 제거 완료")
                 try FileManager.default.removeItem(atPath: fileURL.path())
             } catch {
                 print("file remove error", error)

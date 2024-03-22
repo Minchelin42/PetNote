@@ -37,7 +37,6 @@ class GenderBottomSheetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("genderbottomViewDidLoad: \(viewModel.gender.value)")
         configureHierarchy()
         configureLayout()
         configureView()
@@ -51,8 +50,6 @@ class GenderBottomSheetViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         selectGender?(viewModel.gender.value)
-        print("genderbottom: \(viewModel.gender.value)")
-
     }
     
     @objc func dimmedViewTapped() {
