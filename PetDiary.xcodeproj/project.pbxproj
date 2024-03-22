@@ -15,6 +15,10 @@
 		392C55512BADB4770089FB0D /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C55502BADB4770089FB0D /* OnboardingViewController.swift */; };
 		392C55532BADE4500089FB0D /* ProfileScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C55522BADE4500089FB0D /* ProfileScrollView.swift */; };
 		393624622BAE0E5D00C9218D /* SVProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 393624612BAE0E5D00C9218D /* SVProgressHUD */; };
+		393624642BAE131600C9218D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 393624632BAE131600C9218D /* GoogleService-Info.plist */; };
+		393624672BAE13C400C9218D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 393624662BAE13C400C9218D /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		393624692BAE13C400C9218D /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 393624682BAE13C400C9218D /* FirebaseCrashlytics */; };
+		3936246B2BAE13C400C9218D /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 3936246A2BAE13C400C9218D /* FirebaseMessaging */; };
 		394054E32B9BF396000AF69F /* DateBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */; };
 		394054E52B9C0F60000AF69F /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E42B9C0F60000AF69F /* CompleteButton.swift */; };
 		394054E72B9C1D5A000AF69F /* GenderBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */; };
@@ -80,6 +84,7 @@
 		392C554D2BAD953E0089FB0D /* VersionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionTableViewCell.swift; sourceTree = "<group>"; };
 		392C55502BADB4770089FB0D /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		392C55522BADE4500089FB0D /* ProfileScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScrollView.swift; sourceTree = "<group>"; };
+		393624632BAE131600C9218D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		394054E22B9BF396000AF69F /* DateBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateBottomSheetViewController.swift; sourceTree = "<group>"; };
 		394054E42B9C0F60000AF69F /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		394054E62B9C1D5A000AF69F /* GenderBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderBottomSheetViewController.swift; sourceTree = "<group>"; };
@@ -136,12 +141,15 @@
 			files = (
 				394054ED2B9C2812000AF69F /* RealmSwift in Frameworks */,
 				39CFA77D2BA01CFF0057827F /* Alamofire in Frameworks */,
+				3936246B2BAE13C400C9218D /* FirebaseMessaging in Frameworks */,
 				393624622BAE0E5D00C9218D /* SVProgressHUD in Frameworks */,
 				396D30002B9BEDA000613BFE /* RealmSwift in Frameworks */,
 				39CFA7842BA0B4D60057827F /* Toast in Frameworks */,
 				396D2FFE2B9BEDA000613BFE /* Realm in Frameworks */,
 				396D2FDF2B9ADF7200613BFE /* SnapKit in Frameworks */,
+				393624672BAE13C400C9218D /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				394054EB2B9C2812000AF69F /* Realm in Frameworks */,
+				393624692BAE13C400C9218D /* FirebaseCrashlytics in Frameworks */,
 				394055002B9E0294000AF69F /* FSCalendar in Frameworks */,
 				39CFA78F2BA2BFFF0057827F /* SwipeCellKit in Frameworks */,
 				394054F22B9D74A2000AF69F /* IQKeyboardManagerSwift in Frameworks */,
@@ -227,6 +235,7 @@
 		396D2FBB2B99839200613BFE /* PetDiary */ = {
 			isa = PBXGroup;
 			children = (
+				393624632BAE131600C9218D /* GoogleService-Info.plist */,
 				392C554F2BADB4620089FB0D /* Onboarding */,
 				3969582E2BAC04B60083E9EC /* Setting */,
 				3912459F2BA5BB44005EDF39 /* Network */,
@@ -333,6 +342,7 @@
 				396D2FB52B99839200613BFE /* Sources */,
 				396D2FB62B99839200613BFE /* Frameworks */,
 				396D2FB72B99839200613BFE /* Resources */,
+				3936246C2BAE151D00C9218D /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -351,6 +361,9 @@
 				39CFA7832BA0B4D60057827F /* Toast */,
 				39CFA78E2BA2BFFF0057827F /* SwipeCellKit */,
 				393624612BAE0E5D00C9218D /* SVProgressHUD */,
+				393624662BAE13C400C9218D /* FirebaseAnalyticsWithoutAdIdSupport */,
+				393624682BAE13C400C9218D /* FirebaseCrashlytics */,
+				3936246A2BAE13C400C9218D /* FirebaseMessaging */,
 			);
 			productName = PetDiary;
 			productReference = 396D2FB92B99839200613BFE /* PetDiary.app */;
@@ -389,6 +402,7 @@
 				39CFA7822BA0B4D60057827F /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				39CFA78D2BA2BFFF0057827F /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
 				393624602BAE0E5D00C9218D /* XCRemoteSwiftPackageReference "SVProgressHUD" */,
+				393624652BAE13C300C9218D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 396D2FBA2B99839200613BFE /* Products */;
 			projectDirPath = "";
@@ -406,12 +420,38 @@
 			files = (
 				396D2FD12B9985E500613BFE /* .gitignore in Resources */,
 				396D2FC92B99839700613BFE /* LaunchScreen.storyboard in Resources */,
+				393624642BAE131600C9218D /* GoogleService-Info.plist in Resources */,
 				396D2FC62B99839700613BFE /* Assets.xcassets in Resources */,
 				396D2FC42B99839200613BFE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3936246C2BAE151D00C9218D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		396D2FB52B99839200613BFE /* Sources */ = {
@@ -525,7 +565,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -710,6 +750,14 @@
 				minimumVersion = 2.3.1;
 			};
 		};
+		393624652BAE13C300C9218D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.23.0;
+			};
+		};
 		394054F02B9D74A2000AF69F /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
@@ -773,6 +821,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 393624602BAE0E5D00C9218D /* XCRemoteSwiftPackageReference "SVProgressHUD" */;
 			productName = SVProgressHUD;
+		};
+		393624662BAE13C400C9218D /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 393624652BAE13C300C9218D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		393624682BAE13C400C9218D /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 393624652BAE13C300C9218D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		3936246A2BAE13C400C9218D /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 393624652BAE13C300C9218D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		394054EA2B9C2812000AF69F /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
