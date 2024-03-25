@@ -5,13 +5,13 @@
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>NSCameraUsageDescription</key>
-	<string>촬영한 사진을 등록하기 위해서는 카메라에 대한 권한이 필요합니다</string>
+	<string>카메라에 대한 접근 허용을 통하여 촬영한 사진을 프로필로 등록할 수 있습니다</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>앨범 내 사진을 사용하기 위해선는 사용자의 앨범에 대한 권한이 필요합니다</string>
+	<string>앨범에 대한 접근 허용을 통하여 사용자의 앨범 내 사진을 프로필로 등록할 수 있습니다</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>주변 장소 검색을 위해서 현위치 접근 권한이 필요합니다</string>
+	<string>사용자의 위치에 관한 접근 허용을 통하여 반려동물과 관련된 주변 장소를 알 수 있습니다</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>주변 장소 검색을 위해서 현위치 접근 권한이 필요합니다</string>
+	<string>사용자의 위치에 관한 접근 허용을 통하여 반려동물과 관련된 주변 장소를 알 수 있습니다</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
