@@ -19,9 +19,14 @@ class ProfileViewController: UIViewController {
     let viewModel = ProfileViewModel()
 
     //화면 아무 곳이나 눌렀을 때 키보드 내려감
-    lazy var tapGesture = UITapGestureRecognizer(target: view, action: #selector(view.endEditing))
+    lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapView(_:)))
     
     var type = ProfileType.new
+    
+    @objc func didTapView(_ sender: UITapGestureRecognizer) {
+        inputName()
+        inputWeight()
+    }
     
     override func loadView() {
         self.view = mainView
@@ -276,6 +281,7 @@ class ProfileViewController: UIViewController {
     }
     
     private func addAction() {
+        
         mainView.cameraButton.addAction(UIAction(handler: { action in
             self.viewModel.cameraButtonClicked.value = ()
         }), for: .touchUpInside)
@@ -321,6 +327,8 @@ extension ProfileViewController: UITextFieldDelegate {
         textField.text = ""
         return true
     }
+    
+    
 }
 
 extension ProfileViewController: UIScrollViewDelegate {
