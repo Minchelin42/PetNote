@@ -25,5 +25,9 @@ class Observable<T> {
         closure(value)
         self.closure = closure
     }
+    
+    func registerAction(_ closure: @escaping (T) -> Void) {
+        self.closure = closure
+    }
 }
 

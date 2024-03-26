@@ -61,6 +61,7 @@
 		396D30002B9BEDA000613BFE /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 396D2FFF2B9BEDA000613BFE /* RealmSwift */; };
 		3991E1002BA8A4C8006DBBD0 /* PlaceTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3991E0FF2BA8A4C8006DBBD0 /* PlaceTable.swift */; };
 		3991E1022BA8A5ED006DBBD0 /* PlaceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3991E1012BA8A5ED006DBBD0 /* PlaceRepository.swift */; };
+		39A2DB362BB1D05A0086B173 /* VersionCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A2DB352BB1D05A0086B173 /* VersionCheck.swift */; };
 		39C1D64E2B9F3EF100418B68 /* PlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64D2B9F3EF100418B68 /* PlanView.swift */; };
 		39C1D6502B9F60C300418B68 /* PlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */; };
 		39CFA7762BA018450057827F /* NewPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CFA7752BA018450057827F /* NewPlanViewController.swift */; };
@@ -122,6 +123,7 @@
 		396D2FFA2B9BEB7000613BFE /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
 		3991E0FF2BA8A4C8006DBBD0 /* PlaceTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTable.swift; sourceTree = "<group>"; };
 		3991E1012BA8A5ED006DBBD0 /* PlaceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceRepository.swift; sourceTree = "<group>"; };
+		39A2DB352BB1D05A0086B173 /* VersionCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionCheck.swift; sourceTree = "<group>"; };
 		39C1D64D2B9F3EF100418B68 /* PlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanView.swift; sourceTree = "<group>"; };
 		39C1D64F2B9F60C300418B68 /* PlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCollectionViewCell.swift; sourceTree = "<group>"; };
 		39CFA7752BA018450057827F /* NewPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPlanViewController.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				394054F62B9D772A000AF69F /* Observable.swift */,
 				3969582B2BA9CFD10083E9EC /* PetDiaryTabBarController.swift */,
 				396958342BAC38EC0083E9EC /* UserDefaultManager.swift */,
+				39A2DB352BB1D05A0086B173 /* VersionCheck.swift */,
 			);
 			path = PetDiary;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				39CFA7862BA0C0920057827F /* PlanTable.swift in Sources */,
 				396D2FBF2B99839200613BFE /* SceneDelegate.swift in Sources */,
 				3912459E2BA5B4E2005EDF39 /* APIKey.swift in Sources */,
+				39A2DB362BB1D05A0086B173 /* VersionCheck.swift in Sources */,
 				394054E72B9C1D5A000AF69F /* GenderBottomSheetViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

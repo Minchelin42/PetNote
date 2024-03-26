@@ -166,7 +166,7 @@ final class ProfileScrollView: UIView {
     }
     
     func configureView() {
- 
+        
         profileButton.layer.cornerRadius = 80
         profileButton.setImage(UIImage(named: "profile"), for: .normal)
         profileButton.contentVerticalAlignment = .fill

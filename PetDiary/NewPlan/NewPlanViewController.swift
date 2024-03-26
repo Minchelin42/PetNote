@@ -98,7 +98,7 @@ class NewPlanViewController: UIViewController {
         
         pet = {
            let repository = PetRepository()
-            return repository.fetch().where {
+            return PetRepository().fetch().where {
                 $0.name == UserDefaultManager.shared.nowPet
             }
         }()

@@ -75,7 +75,7 @@ class PlanViewController: UIViewController {
         pet = {
             print("펫 이름: \(petName)")
            let repository = PetRepository()
-            return repository.fetch().where {
+            return PetRepository().fetch().where {
                 $0.name == petName
             }
         }()

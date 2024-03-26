@@ -6,8 +6,32 @@
 //
 
 import UIKit
+import Toast
 
 extension UIViewController {
+
+    func makeAlert(alertTitle: String, alertMessage: String, actionMessage: String, clickAction: @escaping () -> ()) {
+        let alert = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let action = UIAlertAction(title: actionMessage, style: .default) { _ in
+            clickAction()
+        }
+
+        alert.addAction(cancel)
+        alert.addAction(action)
+        
+        self.present(alert, animated: true)
+    }
+    
+    func makeToast(_ message: String) {
+        var style = ToastStyle()
+        style.backgroundColor = Color.lightGreen!
+        style.messageColor = .white
+        style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
+        self.view.makeToast(message, duration: 2.0, position: .bottom, style: style)
+    }
+    
     func loadImageToDocument(filename: String) -> UIImage? {
         guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
         let fileURL = documentDirectory.appendingPathComponent("\(filename).jpg")

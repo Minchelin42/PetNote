@@ -9,6 +9,7 @@ import Foundation
 import RealmSwift
 
 final class PetRepository {
+    
     private let realm = try! Realm()
     
     func printLink() {

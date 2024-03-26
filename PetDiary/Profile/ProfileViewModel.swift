@@ -16,17 +16,40 @@ class ProfileViewModel {
     var firstMeet: Observable<Date?> = Observable(nil)
     var birth: Observable<Date?> = Observable(nil)
     var weight: Observable<Double?> = Observable(nil)
-    var image = Observable("")
+    //PetID (이미지의 이름으로 사용할 것)
+    var petID = Observable("")
+    
+    var nowPet: Observable<PetTable?> = Observable(nil)
     
     var checkInputData = Observable(false)
-    var registerButtonClicked: Observable<Void?> = Observable(nil)
     var checkDuplicate = Observable(false)
     var checkDate = Observable(false)
     
+    var cameraButtonClicked: Observable<Void?> = Observable(nil)
+    var genderButtonClicked: Observable<Void?> = Observable(nil)
+    var dateButtonClicked: Observable<DateType?> = Observable(nil)
+    var editButtonClicked: Observable<Void?> = Observable(nil)
+    var registerButtonClicked: Observable<Void?> = Observable(nil)
+
+    
     init() {
-        registerButtonClicked.bind { _ in
-            self.appendNewPet()
+        nowPet.bind { pet in
+            guard let pet = pet else { return }
+            
+            self.name.value = pet.name
+            self.gender.value = pet.gender
+            self.firstMeet.value = pet.meet
+            self.birth.value = pet.birth
+            self.weight.value = pet.weight
+            self.petID.value = String(describing: pet.id)
         }
+    }
+    
+    func findNowPet() {
+        let target = PetRepository().fetch().where {
+            $0.name.equals(UserDefaultManager.shared.nowPet)
+        }
+        self.nowPet.value = target[0]
     }
     
     func compareDate() {
@@ -56,7 +79,7 @@ class ProfileViewModel {
         }
     }
     
-    private func appendNewPet() {
+    func appendNewPet() {
         guard self.name.value != "",
               self.gender.value != nil,
               self.firstMeet.value != nil,
@@ -74,7 +97,7 @@ class ProfileViewModel {
             let registerPet = repository.fetch()
             
             if let id = registerPet.last?.id {
-                self.image.value = String(describing: id)
+                self.petID.value = String(describing: id)
             }
         }
         
