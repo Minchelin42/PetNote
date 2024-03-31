@@ -17,6 +17,7 @@ class UserDefaultManager {
     
     enum UDKey: String {
         case nowPet
+        case dataCount
     }
 
     var nowPet: String {
@@ -27,5 +28,13 @@ class UserDefaultManager {
             ud.set(newValue, forKey: UDKey.nowPet.rawValue)
         }
     }
-
+    
+    var dataCount: Int {
+        get {
+            ud.integer(forKey: UDKey.dataCount.rawValue)
+        }
+        set {
+            ud.set(newValue, forKey: UDKey.dataCount.rawValue)
+        }
+    }
 }

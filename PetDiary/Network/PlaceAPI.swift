@@ -11,14 +11,14 @@ import Alamofire
 class PlaceAPI {
     
     static let shared = PlaceAPI()
-    
-    let url = "http://api.kcisa.kr/openapi/API_TOU_050/request?serviceKey=\(APIKey.serviceKey)"
-    
+
     let headers: HTTPHeaders = [
         "Accept": "application/json"
     ]
     
-    func callRequest(completionHandler: @escaping((Int?, Place?, AFError?) -> Void)) {
+    func callRequest(page: Int, completionHandler: @escaping((Int?, Place?, AFError?) -> Void)) {
+        let url = "http://api.kcisa.kr/openapi/API_TOU_050/request?serviceKey=\(APIKey.serviceKey)&pageNo=\(page)"
+        
         AF.request(url, method: .get, headers: headers).responseDecodable(of: Place.self) { response in
             
             switch response.result {

@@ -21,10 +21,10 @@ enum Category {
 }
 
 class PlaceViewController: UIViewController {
-
+    
     let map = MKMapView()
     let searchButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.layer.cornerRadius = 22
         button.backgroundColor = Color.green
         button.setTitle("내위치로 이동", for: .normal)
@@ -36,79 +36,86 @@ class PlaceViewController: UIViewController {
     
     lazy var locationManager = CLLocationManager()
 
-    var arr: Items = Items(item: [])
-    
     let repository = PlaceRepository()
     
     var userLocation: CLLocationCoordinate2D!
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        repository.printLink()
 
+        repository.printLink()
+        
         configureHierarchy()
         configureLayout()
         configureView()
         
-        if repository.fetch().isEmpty {
-            loadPlaceData()
-        }
-        
+        loadPlaceData()
+
         getRange()
     }
-
-    func loadPlaceData() {
-        
+    
+    private func loadPlaceData() {
         SVProgressHUD.show(withStatus: "장소 정보를 불러오는 중입니다")
-        
-        DispatchQueue.global().async {
-            var arr: Items = Items(item: [])
-            var inputData: [PlaceTable] = []
 
-            PlaceAPI.shared.callRequest { status, result, error in
-                
-                SVProgressHUD.dismiss()
-                guard let status = status else {
-                    print("네트워크 통신 오류")
-                    var style = ToastStyle()
-                    style.backgroundColor = Color.lightGreen!
-                    style.messageColor = .white
-                    style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
-                    style.messageAlignment = .center
-                    self.view.makeToast("장소 불러오기를 실패하였습니다\n다음에 다시 시도해주세요", duration: 10.0, position: .bottom, style: style)
-                    return
-                }
-                
-                arr = (result?.response.body.items)!
-            
-                for index in 0..<arr.item.count {
-                    let item = arr.item[index]
-
-                    let inputPlace = PlaceTable(title: item.title, category1: item.category1, category2: item.category2, information: item.description, tel: "", address: item.address, latitude: 0.0, longitude: 0.0)
-                        
-                    
-                    let coordinates = self.getLocation(item.coordinates)
-                    inputPlace.latitude = coordinates[0]
-                    inputPlace.longitude = coordinates[1]
-                    
-                    if inputPlace.information.contains("반려동물 동반불가") { continue }
-                    
-                    inputData.append(inputPlace)
-                }
-
-                self.repository.inputItem(inputData)
-                
-                var style = ToastStyle()
-                style.backgroundColor = Color.lightGreen!
-                style.messageColor = .white
-                style.messageFont = .systemFont(ofSize: 14, weight: .semibold)
-                self.view.makeToast("장소 업데이트가 완료되었습니다", duration: 2.0, position: .bottom, style: style)
-            }
+        callPlaceAPI(page: 1)
+    }
+    
+    private func checkAndUpdateCount(total: Int, page: Int) {
+        if UserDefaultManager.shared.dataCount == total {
+            self.makeToast("장소 업데이트가 완료되었습니다")
+        } else {
+            callPlaceAPI(page: page + 1)
         }
     }
     
+    private func callPlaceAPI(page: Int) {
+        
+        var arr: Items = Items(item: [])
+        var inputData: [PlaceTable] = []
+
+        PlaceAPI.shared.callRequest(page: page) { status, result, error in
+            SVProgressHUD.dismiss()
+            
+            guard let status = status else {
+                print("네트워크 통신 오류")
+                self.makeToast("장소 불러오기를 실패하였습니다\n다음에 다시 시도해주세요")
+                return
+            }
+            
+            let totalCount = Int(result?.response.body.totalCount ?? "") ?? 0
+            
+            if UserDefaultManager.shared.dataCount >= totalCount {
+                return
+            }
+            
+            if page * 10000 > totalCount {
+                UserDefaultManager.shared.dataCount = totalCount
+            }
+            
+            if page == 1 && self.repository.fetch().count > 0 {
+                self.repository.deleteAllItem()
+            }
+            
+            arr = (result?.response.body.items)!
+
+            for index in 0..<arr.item.count {
+                let item = arr.item[index]
+                let inputPlace = PlaceTable(title: item.title, category1: item.category1, category2: item.category2, information: item.description, tel: "", address: item.address, latitude: 0.0, longitude: 0.0)
+                let coordinates = self.getLocation(item.coordinates)
+                inputPlace.latitude = coordinates[0]
+                inputPlace.longitude = coordinates[1]
+                
+                if inputPlace.information.contains("반려동물 동반불가") { continue }
+                
+                inputData.append(inputPlace)
+            }
+            
+            self.repository.inputItem(inputData)
+            
+            self.checkAndUpdateCount(total: totalCount, page: page)
+        }
+    }
     
     private func configureHierarchy() {
         view.addSubview(map)
@@ -151,15 +158,17 @@ class PlaceViewController: UIViewController {
         
         map.delegate = self
         locationManager.delegate = self
-        
-        map.register(CustomAnnotationView.self, forAnnotationViewWithReuseIdentifier: NSStringFromClass(CustomAnnotationView.self))
-        
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
 
+        map.register(PetPlaceAnnotationView.self,forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+        map.register(PlaceClusterAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
+ 
         searchButton.addTarget(self, action: #selector(searchButtonclick), for: .touchUpInside)
         
         placeInfoView.layer.cornerRadius = 20
         placeInfoView.isHidden = true
-
+        
     }
     
     @objc func searchButtonclick() {
@@ -171,7 +180,7 @@ class PlaceViewController: UIViewController {
         
         let center = map.region.center
         let span = map.region.span
-       
+        
         
         let farSouth = CLLocation(latitude: center.latitude - span.latitudeDelta * 0.5, longitude: center.longitude)
         let farNorth = CLLocation(latitude: center.latitude + span.latitudeDelta * 0.5, longitude: center.longitude)
@@ -183,59 +192,58 @@ class PlaceViewController: UIViewController {
         let minimumlongtitude: Double = farWest.coordinate.longitude as Double
         let maximumLongitude: Double = farEast.coordinate.longitude as Double
 
-        let filterPlace = repository.fetch().where {
-                ($0.latitude >= minimumLatitude) && ($0.latitude <= maximumLatitude) && ($0.longitude >= minimumlongtitude) && ($0.longitude <= maximumLongitude)
-            }
-
+        let filterPlace = repository.fetch()
+        
         let annotations = map.annotations
         
         map.removeAnnotations(annotations)
         
         for index in 0..<filterPlace.count {
-            let annotation = CustomAnnotation(title: filterPlace[index].title,
-                                              coordinate: CLLocationCoordinate2D(latitude: filterPlace[index].latitude,
-                                                                                 longitude: filterPlace[index].longitude))
             
             let category = filterPlace[index].category2
+            var imageName = ""
             
             switch category {
-            case "동물병원" : 
-                annotation.imageName = Category.hospital
-            case "동물약국" :  
-                annotation.imageName = Category.medicine
-            case "미용" :  
-                annotation.imageName = Category.beauty
-            case "반려동물용품" :  
-                annotation.imageName = Category.shopping
-            default:  
-                annotation.imageName = Category.etc
+            case "동물병원" :
+                imageName = Category.hospital
+            case "동물약국" :
+                imageName = Category.medicine
+            case "미용" :
+                imageName = Category.beauty
+            case "반려동물용품" :
+                imageName = Category.shopping
+            default:
+                imageName = Category.etc
             }
             
-            map.addAnnotation(annotation)
+            let annotation = CustomAnnotation(title: filterPlace[index].title,
+                                              coordinate: CLLocationCoordinate2D(latitude: filterPlace[index].latitude,
+                                                                                 longitude: filterPlace[index].longitude),
+                                              imageName: imageName)
             
-            if index > 30 { return }
+            let distance: CLLocationDistance = MKMapPoint(annotation.coordinate).distance(to: MKMapPoint(map.centerCoordinate));
+            
+            if distance <= 3000 {
+                map.addAnnotation(annotation)
+            }
+            
         }
         
-
     }
     
     private func getLocation(_ coordinates: String) -> [Double] {
         //위도 경도 추출
-
-            let arr = coordinates.split(separator: ", ")
-            
-            let letitude = String(arr[0].dropFirst())
-            let longitude = String(arr[1].dropFirst())
+        
+        let arr = coordinates.split(separator: ", ")
+        
+        let letitude = String(arr[0].dropFirst())
+        let longitude = String(arr[1].dropFirst())
         
         if let letitude = Double(letitude), let longitude = Double(longitude) {
             return [letitude, longitude]
         } else { return [0, 0] }
     }
-    
-    private func setupAnnotationView(for annotation: CustomAnnotation, on mapView: MKMapView) -> MKAnnotationView {
-        return map.dequeueReusableAnnotationView(withIdentifier: NSStringFromClass(CustomAnnotationView.self), for: annotation)
-    }
-    
+
     private func setLocation(_ status: CLAuthorizationStatus) {
         switch status {
         case .notDetermined:
@@ -261,18 +269,18 @@ class PlaceViewController: UIViewController {
     
     private func goToSetting() {
         let alert = UIAlertController(title: "위치 정보 이용", message: "설정 > 개인정보보호 > 위치 설정을 허용하시면 현위치 주변 정보가 검색 가능합니다", preferredStyle: .alert)
-                let setting = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
-                    if let setting = URL(string: UIApplication.openSettingsURLString) {
-                        UIApplication.shared.open(setting)
-                    }
-                }
-                alert.addAction(setting)
-                present(alert, animated: true)
+        let setting = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            if let setting = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(setting)
+            }
+        }
+        alert.addAction(setting)
+        present(alert, animated: true)
     }
     
-    func setRegionAndAnnotation(_ center: CLLocationCoordinate2D) {
+    private func setRegionAndAnnotation(_ center: CLLocationCoordinate2D) {
         
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 700, longitudinalMeters: 700)
+        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1500, longitudinalMeters: 1500)
         map.setRegion(region, animated: true)
     }
     
@@ -292,7 +300,7 @@ extension PlaceViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("성공적으로 못가져옴")
         setDefaultLocation()
-       
+        
     }
     
     func setDefaultLocation() {
@@ -310,39 +318,40 @@ extension PlaceViewController: CLLocationManagerDelegate {
     }
 }
 
-extension PlaceViewController: MKMapViewDelegate {
+extension CLLocationCoordinate2D {
+    func distance(from: CLLocationCoordinate2D) -> CLLocationDistance {
+        let from = CLLocation(latitude: from.latitude, longitude: from.longitude)
+        let to = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        return from.distance(from: to)
+    }
+}
 
+
+extension PlaceViewController: MKMapViewDelegate {
+    
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         if !animated {
-         getRange()
-         self.placeInfoView.isHidden = true
+            getRange()
+            self.placeInfoView.isHidden = true
         }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !annotation.isKind(of: MKUserLocation.self) else { return nil }
-        
-        var annotationView: MKAnnotationView?
+        guard let annotation = annotation as? CustomAnnotation else { return nil }
 
-        if let customAnnotation = annotation as? CustomAnnotation {
-            annotationView = setupAnnotationView(for: customAnnotation, on: mapView)
-        }
-
-        return annotationView
+        return PetPlaceAnnotationView(annotation: annotation, reuseIdentifier: PetPlaceAnnotationView.ReuseID)
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-
+        
         guard let title = view.annotation?.title,
-        let latitude = view.annotation?.coordinate.latitude,
-        let longitude = view.annotation?.coordinate.longitude else { return }
-        
-        // MARK: - 사용자 위치 선택했을 때 터지는 거 수정하기
-        
+              let latitude = view.annotation?.coordinate.latitude,
+              let longitude = view.annotation?.coordinate.longitude else { return }
+
         let selectPlace = repository.fetch().where {
             $0.title == title ?? "" && $0.latitude == latitude && $0.longitude == longitude
         }
-
+        
         if selectPlace.isEmpty {
             print("위치 정보 없음")
             return
@@ -353,66 +362,5 @@ extension PlaceViewController: MKMapViewDelegate {
         placeInfoView.infoLabel.text = selectPlace[0].information
         
         placeInfoView.isHidden = false
-    }
-}
-
-class CustomAnnotation: NSObject, MKAnnotation {
-
-    var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var imageName: String?
-    
-    init(title: String, coordinate: CLLocationCoordinate2D) {
-        self.title = title
-        self.coordinate = coordinate
-    }
-}
-
-class CustomAnnotationView: MKAnnotationView {
-
-    let customImageView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFit
-        return view
-    }()
-    
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
-        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        
-        configUI()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configUI() {
-        self.addSubview(customImageView)
-        customImageView.snp.makeConstraints { make in
-            make.size.equalTo(30)
-        }
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        customImageView.image = nil
-    }
-
-    override func prepareForDisplay() {
-        super.prepareForDisplay()
-        
-        guard let annotation = annotation as? CustomAnnotation else { return }
-
-        guard let imageName = annotation.imageName,
-              let image = UIImage(named: imageName) else { return }
-        
-        customImageView.image = image
-    }
-    
-
-    override func layoutSubviews() {
-    super.layoutSubviews()
-        bounds.size = CGSize(width: 30, height: 30)
-        centerOffset = CGPoint(x: 0, y: 15)
     }
 }
